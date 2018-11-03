@@ -1,0 +1,11 @@
+{
+  "name": "queueHandler",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "author": "star1954",
+  "dependencies": {
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "fs": "0.0.1-security",
+    "winston": "^3.1.0"
+  }
+}
