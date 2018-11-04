@@ -25,11 +25,21 @@ function loadData() {
   }
   console.log("admins: "+tempdata);
 }
+function welcome(uuid) {
+  bot.addToRole( {
+    serverID:,
+    userID:,
+    roleID:,
+  } [function func(error,response) {
 
-
-
+  }]
+);
+}
+loadData();
 
 //Queue class
+/*
+
 function Queue(){
 	this.data = [];
 }
@@ -54,6 +64,11 @@ Queue.prototype.removeread = function() {
 
 //test queue
 var lineQueue = new Queue();
+//*/
+
+console.log(client.getAllUsers(function err(error){
+    
+}););
 
 //configuration
 logger.remove(logger.transports.Console);
@@ -103,16 +118,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: 'Pong!'
                 });
             break;
-            case 'linemeup':
-            if(lineQueue.data.find(userID)===undefined){
-            	lineQueue.add(userID);
-            }
-            break;
-            case 'shift':
-            var drop = lineQueue.removeread();
-            msgc++;
-            break;
-
             case 'imtheadmin':
             if(!admin){console.log("Adding "+user+":"+userID+" as an admin");
             admins.push(userID);
