@@ -66,9 +66,7 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-console.log(bot.getAllUsers(function err(error){
 
-}););
 
 //configuration
 logger.remove(logger.transports.Console);
@@ -103,6 +101,9 @@ console.log("Running and Listening")
 
 //listen
 bot.on('message', function (user, userID, channelID, message, evt) {
+  console.log(bot.getAllUsers(function err(error){
+
+  }););
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     if (message.substring(0, 1) == '!') {
