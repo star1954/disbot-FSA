@@ -66,8 +66,8 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-console.log(client.getAllUsers(function err(error){
-    
+console.log(bot.getAllUsers(function err(error){
+
 }););
 
 //configuration
