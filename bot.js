@@ -25,17 +25,17 @@ function loadData() {
   }
   console.log("admins: "+tempdata);
 }
-function welcome(uuid) {
+function welcome(uid,sid) {
   bot.addToRole( {
-    serverID:,
-    userID:,
-    roleID:,
-  } [function func(error,response) {
+    serverID:sid,
+    userID:uid,
+    roleID:0,
+  },[function func(error,response) {
 
   }]
 );
 }
-loadData();
+//loadData();
 
 //Queue class
 /*
@@ -101,15 +101,12 @@ console.log("Running and Listening")
 
 //listen
 bot.on('message', function (user, userID, channelID, message, evt) {
-  console.log(bot.getAllUsers(function err(error){
-
-  }););
+  console.log(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
-
         args = args.splice(1);
         switch(cmd) {
             // !ping
@@ -119,16 +116,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     message: 'Pong!'
                 });
             break;
+
             case 'imtheadmin':
-            if(!admin){console.log("Adding "+user+":"+userID+" as an admin");
-            admins.push(userID);
-            console.log(admins);
-            send(userID,"YOU ARE NOW THE ADMIN");
-
-            admin = true;
-            }else{console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
+            if(!admin){
+              console.log("Adding "+user+":"+userID+" as an admin");
+              admins.push(userID);
+              console.log(admins);
+              send(userID,"YOU ARE NOW THE ADMIN");
+              admin = true;
+              }else{
+                console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-
             break;
 
             case 'addadmin':
