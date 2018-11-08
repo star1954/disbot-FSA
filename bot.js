@@ -4,12 +4,17 @@ const auth = require('./auth.json');
 var fs = require('fs');
 var admins = [234843909291769856];
 var admin = true;
+/*
+const newcomerrole = "368640999112835075";
+const serverID = "323941972157005826";
+var mainchannelID = "323941972157005826";
+//*/
+//*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
+//*/
 const greet = "Welcome <@TEMP>";
-//368640999112835075
-
 
 var msgc = 0;
 var tempdata;
