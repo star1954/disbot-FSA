@@ -6,7 +6,7 @@ var admins = [234843909291769856];
 var admin = true;
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
-var channelID = "509889611066245122";
+var mainchannelID = "509889611066245122";
 const greet = "Welcome <@TEMP>";
 //368640999112835075
 
@@ -94,7 +94,7 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    send(channelID,'Bot Online');
+    send(mainchannelID,'Bot Online');
 });
 
 console.log("Running and Listening")
@@ -102,7 +102,7 @@ console.log("Running and Listening")
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
   var sms = greet.replace("TEMP",callback.id)
   setTimeout(function(){
-    send(channelID,sms);
+    send(mainchannelID,sms);
   },500);
   console.log("new user");
     bot.addToRole({
@@ -115,7 +115,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
 
 //listen
 bot.on('message', function (user, userID, channelID, message, evt) {
-  channelID = channelID;
+  mainchannelID = channelID;
   //console.log(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
@@ -149,7 +149,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
                 //set admin
-                send()
+                send(mainchannelID,"")
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
@@ -160,7 +160,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
                 //set admin
-                send(channelID,channelID);
+                send(channelID,mainchannelID);
               }
 
             }
