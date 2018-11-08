@@ -2,19 +2,21 @@ var Discord = require('discord.io');
 var logger = require('winston');
 const auth = require('./auth.json');
 var fs = require('fs');
-var admins = [234843909291769856];
+var admins = ["234843909291769856","255535608015880193"];
 var admin = true;
-/*
+const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
+const greetDM = ["test1","test2"];
+
+//*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-//*
+/*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
-const greet = "Welcome <@TEMP>";
 
 var msgc = 0;
 var tempdata;
@@ -106,21 +108,26 @@ console.log("Running and Listening")
 
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
   var sms = greet.replace("TEMP",callback.id)
+  bot.createDMChannel(callback.id, function(call){
+    for(var i = 0; i<greetDM.length; i++){
+      send(callback.id,greetDM[i]);
+    }
+  });
   setTimeout(function(){
     send(mainchannelID,sms);
   },500);
-  console.log("new user");
+  console.log("new user, added to role:"+newcomerrole);
     bot.addToRole({
       serverID:serverID,
       userID:callback.id,
-      roleID:newcomerrole
+      roleID:newcomerrole,
     });
  });
 
 
 //listen
 bot.on('message', function (user, userID, channelID, message, evt) {
-  mainchannelID = channelID;
+  //mainchannelID = channelID;
   //console.log(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
@@ -131,11 +138,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         switch(cmd) {
             // !ping
             case 'ping':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //set admin
                 bot.sendMessage({
                     to: channelID,
                     message: 'Pong!'
                 });
-                console.log(channelID);
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              }
+            }
+
             break;
 
             case 'imtheadmin':
@@ -154,7 +167,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
                 //set admin
-                send(mainchannelID,"")
+                send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
