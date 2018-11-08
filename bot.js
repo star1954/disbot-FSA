@@ -4,6 +4,11 @@ const auth = require('./auth.json');
 var fs = require('fs');
 var admins = [234843909291769856];
 var admin = true;
+const newcomerrole = 509824083815563268;
+const serverID = 502961198002864130;
+//368640999112835075
+
+
 var msgc = 0;
 var tempdata;
 const txtdata = tempdata;
@@ -99,6 +104,15 @@ function send(id, message){
 
 console.log("Running and Listening")
 
+bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
+    bot.addToRole({
+      serverID:serverID,
+      userID:callback.id,
+      roleID:newcomerrole
+    });
+ });
+
+
 //listen
 bot.on('message', function (user, userID, channelID, message, evt) {
   console.log(bot.getAllUsers());
@@ -130,7 +144,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
 
             case 'addadmin':
-
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //set admin
+                admins.push(userID);
+                console.log("Adding "+user+":"+userID+" as an admin");
+              }
+            }
 
          }
      }
