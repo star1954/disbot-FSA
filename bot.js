@@ -11,7 +11,7 @@ const txtdata = tempdata;
 tempdata = fs.readFileSync('data.txt','utf8')
 
 //date format
-date.format(now, 'YY-MM-DD');
+//date.format(now, 'YY-MM-DD');
 
 //loadData
 function loadData() {
