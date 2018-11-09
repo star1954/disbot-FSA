@@ -1,6 +1,6 @@
 var Discord = require('discord.io');
 var logger = require('winston');
-var time = require('date-and-time');
+var date = require('date-and-time');
 const auth = require('./auth.json');
 var fs = require('fs');
 var admins = [234843909291769856];
@@ -11,7 +11,7 @@ const txtdata = tempdata;
 tempdata = fs.readFileSync('data.txt','utf8')
 
 //date format
-date.format(now, 'YYMM');
+date.format(now, 'YY-MM-DD');
 
 //loadData
 function loadData() {
@@ -62,9 +62,6 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-console.log(client.getAllUsers(function err(error){
-
-}););
 
 //configuration
 logger.remove(logger.transports.Console);
