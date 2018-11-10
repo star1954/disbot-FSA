@@ -8,6 +8,7 @@ var admin = true;
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["test1","test2"];
 
+//Channel ID for summon and auto-role
 //*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
@@ -22,7 +23,7 @@ var mainchannelID = "509889611066245122";
 var msgc = 0;
 var tempdata;
 const txtdata = tempdata;
-tempdata = fs.readFileSync('data.txt','utf8')
+tempdata = fs.readFileSync('data.txt','utf8')//reading file
 //loadData
 function loadData() {
   var apos = txtdata.search("!admins");
@@ -72,9 +73,7 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-
-
-//configuration
+//configuration of logger
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
     colorize: true
@@ -86,10 +85,11 @@ var bot = new Discord.Client({
    autorun: true
 });
 
+//save data
 function saveData(){
 
 }
-
+//send message
 function send(id, message){
     bot.sendMessage({
                     to: id,
@@ -97,7 +97,7 @@ function send(id, message){
                 });
 }
 
-
+//bot initialization
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
@@ -105,19 +105,22 @@ bot.on('ready', function (evt) {
     send(mainchannelID,'Bot Online');
 });
 
-console.log("Running and Listening")
+console.log("Running and Listening");
 
+//welcome message
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
-  var sms = greet.replace("TEMP",callback.id)
+  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace
   bot.createDMChannel(callback.id, function(call){
     for(var i = 0; i<greetDM.length; i++){
+      //DM the set messages
       send(callback.id,greetDM[i]);
     }
   });
   setTimeout(function(){
-    send(mainchannelID,sms);
+    send(mainchannelID,sms);//send the message after .5 seconds
   },500);
-  console.log("new user, added to role:"+newcomerrole);
+  console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
+  //add the user to the role, somehow not working
     bot.addToRole({
       serverID:serverID,
       userID:callback.id,
@@ -126,7 +129,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
  });
 
 
-//listen
+//listen for message commands
 bot.on('message', function (user, userID, channelID, message, evt) {
   //mainchannelID = channelID;
   //console.log(bot.getAllUsers());
@@ -137,7 +140,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         args = args.splice(1);
         switch(cmd) {
-            // !ping
+
+            default:
+            //unreconized command
+            send(channelID,"Command not reconized");
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            break;
+            //ping for debugging
             case 'ping':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
@@ -151,19 +160,20 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             }
 
             break;
-
+            //deprecated, will be removed later on
             case 'imtheadmin':
-            if(!admin){
+            if(!admin){//if admin has not been claimed
               console.log("Adding "+user+":"+userID+" as an admin");
               admins.push(userID);
               console.log(admins);
               send(userID,"YOU ARE NOW THE ADMIN");
               admin = true;
-              }else{
+            }else{//if malicious user attemts to add themselves as admin
                 console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
+                send(channelID,"Command not reconized");
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             break;
-
+            //fsa summon, requested by AuroraTheFirst
             case 'summon':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
