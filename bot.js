@@ -148,17 +148,22 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
             //ping for debugging
             case 'ping':
+            var sent = false;
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
-                //set admin
+                //send pong
                 bot.sendMessage({
                     to: channelID,
                     message: 'Pong!'
                 });
+                sent = true;
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
-
+            if(!sent){
+              send(channelID,"Command not reconized");
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            }
             break;
             //deprecated, will be removed later on
             case 'imtheadmin':
@@ -185,6 +190,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
             break;
 
+            case 'rules':
+            for(var i = 0; i<greetDM.length; i++){
+              //DM the set messages
+              send(userID,greetDM[i]);
+            }
+            break;
             case 'debugid':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
