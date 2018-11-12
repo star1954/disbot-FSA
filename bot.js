@@ -1,13 +1,18 @@
 var Discord = require('discord.io');
 var logger = require('winston');
-//var date = require('time-and-date');
+var date = require('time');
+var readline = require('readline');
 const auth = require('./auth.json');
 var fs = require('fs');
 var admins = ["234843909291769856","255535608015880193"];
 var admin = true;
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["test1","test2"];
-
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+//Channel ID for summon and auto-role
 //*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
@@ -21,18 +26,19 @@ var mainchannelID = "509889611066245122";
 
 var msgc = 0;
 var tempdata;
-const txtdata = tempdata;
-tempdata = fs.readFileSync('data.txt','utf8')
+
+tempdata = fs.readFileSync('data.txt','utf8')//reading file
 //loadData
-function loadData() {
-  var apos = txtdata.search("!admins");
-  tempdata = [];
+function loadData(txtdata) {
+  var apos = txtdata.search("!usertime");//find the data
+  tempdata = [""];//varible for the data
   var temp0 = 0;
   for(var i = apos+6; i<txtdata.length;i++){
-    if(txtdata[i]===','){
+    if(txtdata[i]===','){//if next ID
       temp0++;
+      tempdata.push("");
       continue;
-    }else if (txtdata[i]===';') {
+    }else if (txtdata[i]===';') {//end scan
       temp0 = 0;
       break;
     }
@@ -41,7 +47,7 @@ function loadData() {
   console.log("admins: "+tempdata);
 }
 
-//loadData();
+//loadData(tempdata);
 
 //Queue class
 /*
@@ -72,9 +78,7 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-
-
-//configuration
+//configuration of logger
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
     colorize: true
@@ -86,10 +90,11 @@ var bot = new Discord.Client({
    autorun: true
 });
 
+//save data
 function saveData(){
 
 }
-
+//send message
 function send(id, message){
     bot.sendMessage({
                     to: id,
@@ -97,7 +102,7 @@ function send(id, message){
                 });
 }
 
-
+//bot initialization
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
@@ -105,19 +110,22 @@ bot.on('ready', function (evt) {
     send(mainchannelID,'Bot Online');
 });
 
-console.log("Running and Listening")
+console.log("Running and Listening");
 
+//welcome message
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
-  var sms = greet.replace("TEMP",callback.id)
+  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace
   bot.createDMChannel(callback.id, function(call){
     for(var i = 0; i<greetDM.length; i++){
+      //DM the set messages
       send(callback.id,greetDM[i]);
     }
   });
   setTimeout(function(){
-    send(mainchannelID,sms);
+    send(mainchannelID,sms);//send the message after .5 seconds
   },500);
-  console.log("new user, added to role:"+newcomerrole);
+  console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
+  //add the user to the role, somehow not working
     bot.addToRole({
       serverID:serverID,
       userID:callback.id,
@@ -126,7 +134,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
  });
 
 
-//listen
+//listen for message commands
 bot.on('message', function (user, userID, channelID, message, evt) {
   //mainchannelID = channelID;
   //console.log(bot.getAllUsers());
@@ -137,33 +145,45 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         var cmd = args[0];
         args = args.splice(1);
         switch(cmd) {
-            // !ping
+
+            default:
+            //unreconized command
+            send(channelID,"Command not reconized");
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            break;
+            //ping for debugging
             case 'ping':
+            var sent = false;
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
-                //set admin
+                //send pong
                 bot.sendMessage({
                     to: channelID,
                     message: 'Pong!'
                 });
+                sent = true;
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
-
+            if(!sent){
+              send(channelID,"Command not reconized");
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            }
             break;
-
+            //deprecated, will be removed later on
             case 'imtheadmin':
-            if(!admin){
+            if(!admin){//if admin has not been claimed
               console.log("Adding "+user+":"+userID+" as an admin");
               admins.push(userID);
               console.log(admins);
               send(userID,"YOU ARE NOW THE ADMIN");
               admin = true;
-              }else{
+            }else{//if malicious user attemts to add themselves as admin
                 console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
+                send(channelID,"Command not reconized");
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             break;
-
+            //fsa summon, requested by AuroraTheFirst
             case 'summon':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
@@ -173,6 +193,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               }
             }
 
+            break;
+
+            case 'rules':
+            for(var i = 0; i<greetDM.length; i++){
+              //DM the set messages
+              send(userID,greetDM[i]);
+            }
             break;
 
             case 'debugid':
@@ -194,4 +221,27 @@ if(code === 0){
 }else{
     console.log("DISCONNECTED FROM SERVER");
 }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+rl.on('line', (input) => {
+  if(input === 'end'){
+    send(mainchannelID,"Bot Offline");
+    bot.disconnect();
+  }
+  if(input === 'restart'){
+    send(mainchannelID,"Bot Restarting");
+    bot.disconnect();
+  }
 });
