@@ -1,6 +1,6 @@
 var Discord = require('discord.io');
 var logger = require('winston');
-//var date = require('time-and-date');
+var date = require('time');
 const auth = require('./auth.json');
 var fs = require('fs');
 var admins = ["234843909291769856","255535608015880193"];
@@ -22,18 +22,19 @@ var mainchannelID = "509889611066245122";
 
 var msgc = 0;
 var tempdata;
-const txtdata = tempdata;
+
 tempdata = fs.readFileSync('data.txt','utf8')//reading file
 //loadData
-function loadData() {
-  var apos = txtdata.search("!admins");
-  tempdata = [];
+function loadData(txtdata) {
+  var apos = txtdata.search("!usertime");//find the data
+  tempdata = [""];//varible for the data
   var temp0 = 0;
   for(var i = apos+6; i<txtdata.length;i++){
-    if(txtdata[i]===','){
+    if(txtdata[i]===','){//if next ID
       temp0++;
+      tempdata.push("");
       continue;
-    }else if (txtdata[i]===';') {
+    }else if (txtdata[i]===';') {//end scan
       temp0 = 0;
       break;
     }
@@ -42,7 +43,7 @@ function loadData() {
   console.log("admins: "+tempdata);
 }
 
-//loadData();
+//loadData(tempdata);
 
 //Queue class
 /*
@@ -196,6 +197,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               send(userID,greetDM[i]);
             }
             break;
+
             case 'debugid':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
