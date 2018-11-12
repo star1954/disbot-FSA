@@ -1,17 +1,26 @@
-var Discord = require('discord.io');
-var logger = require('winston');
-var date = require('time');
-var readline = require('readline');
-const auth = require('./auth.json');
-var fs = require('fs');
-var admins = ["234843909291769856","255535608015880193"];
-var admin = true;
+var Discord = require('discord.io');//discord bot stuff
+var logger = require('winston');//idfk
+var date = require('time');//time and date
+var readline = require('readline');//readline for console commands
+var data = require('./data.json');//user data
+const auth = require('./auth.json');//auth token
+var fs = require('fs');//file read system
+const silent = true; //silent online message for testing
+const admins = ["234843909291769856","255535608015880193"];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["test1","test2"];
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+var users = data;
+//example
+const star1954 ={
+  name:'star1954',
+  id:'234843909291769856',
+  lastlogin:2918238289,
+  admin:true,
+};
 //Channel ID for summon and auto-role
 //*
 const newcomerrole = "368640999112835075";
@@ -27,27 +36,9 @@ var mainchannelID = "509889611066245122";
 var msgc = 0;
 var tempdata;
 
-tempdata = fs.readFileSync('data.txt','utf8')//reading file
-//loadData
-function loadData(txtdata) {
-  var apos = txtdata.search("!usertime");//find the data
-  tempdata = [""];//varible for the data
-  var temp0 = 0;
-  for(var i = apos+6; i<txtdata.length;i++){
-    if(txtdata[i]===','){//if next ID
-      temp0++;
-      tempdata.push("");
-      continue;
-    }else if (txtdata[i]===';') {//end scan
-      temp0 = 0;
-      break;
-    }
-    tempdata[temp0].append(txtdata[i]);
-  }
-  console.log("admins: "+tempdata);
-}
 
-//loadData(tempdata);
+//loadData
+console.log(data);
 
 //Queue class
 /*
@@ -92,7 +83,12 @@ var bot = new Discord.Client({
 
 //save data
 function saveData(){
-
+    var json = JSON.stringify(data); //convert it back to a string
+    fs.writeFile('data.json', json, 'utf8', function(err){
+      if(err){
+        console.log(err);
+      }
+    }); //write
 }
 //send message
 function send(id, message){
@@ -107,7 +103,7 @@ bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    send(mainchannelID,'Bot Online');
+    if(!silent) send(mainchannelID,'Bot Online');
 });
 
 console.log("Running and Listening");
@@ -170,19 +166,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             }
             break;
-            //deprecated, will be removed later on
-            case 'imtheadmin':
-            if(!admin){//if admin has not been claimed
-              console.log("Adding "+user+":"+userID+" as an admin");
-              admins.push(userID);
-              console.log(admins);
-              send(userID,"YOU ARE NOW THE ADMIN");
-              admin = true;
-            }else{//if malicious user attemts to add themselves as admin
-                console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
-                send(channelID,"Command not reconized");
-            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-            break;
+
             //fsa summon, requested by AuroraTheFirst
             case 'summon':
             for(var i = 0; i<admins.length; i++){
