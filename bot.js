@@ -1,13 +1,17 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var date = require('time');
+var readline = require('readline');
 const auth = require('./auth.json');
 var fs = require('fs');
 var admins = ["234843909291769856","255535608015880193"];
 var admin = true;
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["test1","test2"];
-
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 //Channel ID for summon and auto-role
 //*
 const newcomerrole = "368640999112835075";
@@ -217,4 +221,27 @@ if(code === 0){
 }else{
     console.log("DISCONNECTED FROM SERVER");
 }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+rl.on('line', (input) => {
+  if(input === 'end'){
+    send(mainchannelID,"Bot Offline");
+    bot.disconnect();
+  }
+  if(input === 'restart'){
+    send(mainchannelID,"Bot Restarting");
+    bot.disconnect();
+  }
 });
