@@ -6,7 +6,7 @@ var data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
 var fs = require('fs');//file read system
 const silent = true; //silent online message for testing
-const admins = ["234843909291769856","255535608015880193"];
+var admins = ["234843909291769856","255535608015880193"];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["test1","test2"];
 const rl = readline.createInterface({
@@ -14,12 +14,14 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 var users = data;
+var muted = [];
 //example
 const star1954 ={
   name:'star1954',
   id:'234843909291769856',
   lastlogin:2918238289,
   admin:true,
+  muted:false,
 };
 //Channel ID for summon and auto-role
 //*
@@ -136,6 +138,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
   //console.log(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
+
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -153,10 +156,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
                 //send pong
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
+
                 sent = true;
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
@@ -164,6 +164,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             if(!sent){
               send(channelID,"Command not reconized");
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            }else{
+              bot.sendMessage({
+                  to: channelID,
+                  message: 'Pong!'
+              });
             }
             break;
 
@@ -171,7 +176,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'summon':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
-                //set admin
+                //send message
                 send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
@@ -195,8 +200,41 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
             }
             break;
+
+            case 'force':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XD
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+                bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) console.log(err);});
+              }
+            }
+            break;
+
+            case 'mute':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XDDDD
+                console.log("!!!!! "+args);
+                bot.mute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              }
+            }
+            break;
+
+            case 'unmute':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XDDDD
+                bot.unmute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              }
+            }
+            break;
+
          }
      }
+
 });
 
 bot.on('disconnect', function(errMsg, code) {
