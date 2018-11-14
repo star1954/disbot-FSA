@@ -239,7 +239,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
 bot.on('disconnect', function(errMsg, code) {
 if(code === 0){
-    console.log("")
+    console.log("Connection Failed")
 }else{
     console.log("DISCONNECTED FROM SERVER");
 }
@@ -258,12 +258,18 @@ if(code === 0){
 
 
 rl.on('line', (input) => {
-  if(input === 'end'){
+  switch(input){
+  case 'end':
     send(mainchannelID,"Bot Offline");
     bot.disconnect();
-  }
-  if(input === 'restart'){
+  break;
+  case 'restart':
     send(mainchannelID,"Bot Restarting");
     bot.disconnect();
+    break;
+
+  case 'connect':
+    bot.connect();
+    break;
   }
 });
