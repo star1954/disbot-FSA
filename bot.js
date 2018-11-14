@@ -8,12 +8,12 @@ var fs = require('fs');//file read system
 const silent = true; //silent online message for testing
 var admins = ["234843909291769856","255535608015880193"];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
-const greetDM = ["test1","test2"];
+const greetDM = ["Hello","Welcome to FSA"];
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-var users = data;
+var users = [];
 var muted = [];
 //example
 const star1954 ={
@@ -21,7 +21,6 @@ const star1954 ={
   id:'234843909291769856',
   lastlogin:2918238289,
   admin:true,
-  muted:false,
 };
 //Channel ID for summon and auto-role
 //*
@@ -34,6 +33,7 @@ const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
+
 
 
 
@@ -83,7 +83,18 @@ var bot = new Discord.Client({
    autorun: true
 });
 
+bot.on('any', function(event) {
+  console.log(event.t);
+  if(event.t == 'GUILD_CREATE'){
+    //console.log(event.d.members);
+    var o = event.d.members;
+    for(var i = 0; i<o.length; i++){
+      users.push(o[i]);
 
+    }
+    console.log(users);
+  }
+});
 
 //bot initialization
 bot.on('ready', function (evt) {
@@ -91,6 +102,9 @@ bot.on('ready', function (evt) {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
     if(!silent) send(mainchannelID,'Bot Online');
+    var temp =bot.getMembers({limit:200});
+
+    console.log(temp);
 });
 
 console.log("Running and Listening");

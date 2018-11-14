@@ -1,8 +1,13 @@
 {
-  "234843909291769856":{
-    "name":"star1954",
-    "id":"234843909291769856",
-    "lastlogin":2918238289,
-    "admin":true
-  }
+  "members":[
+    {"user":{"username": "star1954",
+       "id": "234843909291769856",
+       "discriminator": "6183",
+       "avatar": null },
+    "roles": [],
+    "nick": null,
+    "mute": false,
+    "joined_at": "2018-10-19T21:48:14.257000+00:00",
+    "deaf": false
+  }]
 }
