@@ -35,8 +35,8 @@ const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
 
-var msgc = 0;
-var tempdata;
+
+
 
 
 //loadData
@@ -83,22 +83,7 @@ var bot = new Discord.Client({
    autorun: true
 });
 
-//save data
-function saveData(){
-    var json = JSON.stringify(data); //convert it back to a string
-    fs.writeFile('data.json', json, 'utf8', function(err){
-      if(err){
-        console.log(err);
-      }
-    }); //write
-}
-//send message
-function send(id, message){
-    bot.sendMessage({
-                    to: id,
-                    message: message
-                });
-}
+
 
 //bot initialization
 bot.on('ready', function (evt) {
@@ -245,18 +230,7 @@ if(code === 0){
 }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
+//console commands
 rl.on('line', (input) => {
   switch(input){
   case 'end':
@@ -273,3 +247,28 @@ rl.on('line', (input) => {
     break;
   }
 });
+
+
+
+
+
+/*******************************************************************************
+                                  FUNCTIONS
+*******************************************************************************/
+//save data
+function saveData(){
+    var json = JSON.stringify(data); //convert it back to a string
+    fs.writeFile('data.json', json, 'utf8', function(err){//write to file
+      if(err){//log any errors
+        console.log(err);
+      }
+    }); //write
+}
+
+//send message
+function send(id, message){
+    bot.sendMessage({
+                    to: id,
+                    message: message
+                });
+}
