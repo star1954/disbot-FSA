@@ -16,10 +16,15 @@ const rl = readline.createInterface({
 var users = [];
 var muted = [];
 //example
+
 const star1954 ={
   name:'star1954',
+  roles:[],
+  nick:'star1954',
+  mute:false,
+  deaf:false,
   id:'234843909291769856',
-  lastlogin:2918238289,
+  lastlogin:0,
   admin:true,
 };
 //Channel ID for summon and auto-role
@@ -97,7 +102,6 @@ bot.on('any', function(event) {
         deaf:oi.deaf,
         lastlogin:0,
         admin:false,
-        username:oi.user.username,
         id:oi.user.id,
       };
       users.push(po);
@@ -150,7 +154,6 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
       deaf:oi.deaf,
       lastlogin:0,
       admin:false,
-      username:oi.user.username,
       id:oi.user.id,
     };
     users.push(po);
