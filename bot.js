@@ -89,13 +89,14 @@ var bot = new Discord.Client({
 });
 
 bot.on('any', function(event) {
-  //console.log(event.t);
+  console.log(event.t);
   if(event.t == 'GUILD_CREATE'){
     //console.log(event.d.members);
     var o = event.d.members;
     for(var i = 0; i<o.length; i++){
       var oi = o[i];
       var po = {
+        name:oi.user.username,
         roles:oi.roles,
         nick:oi.nick,
         mute:oi.mute,
@@ -148,6 +149,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
     //add to users array
     var oi = callback;
     var po = {
+      name:oi.user.username,
       roles:oi.roles,
       nick:oi.nick,
       mute:oi.mute,
@@ -288,6 +290,10 @@ rl.on('line', (input) => {
   case 'connect':
     bot.connect();
     break;
+
+  case 'savedata':
+    saveData();
+  break;
   }
 });
 
@@ -300,8 +306,8 @@ rl.on('line', (input) => {
 *******************************************************************************/
 //save data
 function saveData(){
-    var json = JSON.stringify(data); //convert it back to a string
-    fs.writeFile('data.json', json, 'utf8', function(err){//write to file
+    var json = JSON.stringify(users); //convert it back to a string
+    fs.writeFile('./data.json', json, 'utf8', function(err){//write to file
       if(err){//log any errors
         console.log(err);
       }
