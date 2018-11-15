@@ -89,15 +89,19 @@ bot.on('any', function(event) {
     //console.log(event.d.members);
     var o = event.d.members;
     for(var i = 0; i<o.length; i++){
+      var oi = o[i];
       var po = {
-        roles:o.roles,
-        nick:o.nick,
-        mute:o.mute,
-        deaf:o.deaf,
-        //username:o.user.username,
-        //id:o.user.id,
+        roles:oi.roles,
+        nick:oi.nick,
+        mute:oi.mute,
+        deaf:oi.deaf,
+        lastlogin:0,
+        admin:false,
+        username:oi.user.username,
+        id:oi.user.id,
       };
-      users.push(o[i].user);
+      users.push(po);
+
 
     }
     //console.log(users);
@@ -122,18 +126,34 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
       //DM the set messages
       send(callback.id,greetDM[i]);
     }
-  });
+  });//send the DM
+
   setTimeout(function(){
     send(mainchannelID,sms);//send the message after .5 seconds
-  },500);
+  },500);//delayed server welcome
+
   console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
-  console.log(callback);
+  console.log(callback);//log data
+
   //add the user to the role, somehow not working
     bot.addToRole({
       serverID:serverID,
       userID:callback.id,
       roleID:newcomerrole,
     });
+    //add to users array
+    var oi = callback;
+    var po = {
+      roles:oi.roles,
+      nick:oi.nick,
+      mute:oi.mute,
+      deaf:oi.deaf,
+      lastlogin:0,
+      admin:false,
+      username:oi.user.username,
+      id:oi.user.id,
+    };
+    users.push(po);
  });
 
 
