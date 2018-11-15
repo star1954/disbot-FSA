@@ -1,12 +1,33 @@
-var Discord = require('discord.io');
-var logger = require('winston');
-const auth = require('./auth.json');
-var fs = require('fs');
+var Discord = require('discord.io');//discord bot stuff
+var logger = require('winston');//idfk
+var date = require('time');//time and date
+var readline = require('readline');//readline for console commands
+var data = require('./data.json');//user data
+const auth = require('./auth.json');//auth token
+var fs = require('fs');//file read system
+const silent = true; //silent online message for testing
 var admins = ["234843909291769856","255535608015880193"];
-var admin = true;
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
-const greetDM = ["test1","test2"];
+const greetDM = ["Hello","Welcome to FSA"];
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+var users = [];
+var muted = [];
+//example
 
+const star1954 ={
+  name:'star1954',
+  roles:[],
+  nick:'star1954',
+  mute:false,
+  deaf:false,
+  id:'234843909291769856',
+  lastlogin:0,
+  admin:true,
+};
+//Channel ID for summon and auto-role
 //*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
@@ -18,29 +39,13 @@ const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
 
-var msgc = 0;
-var tempdata;
-const txtdata = tempdata;
-tempdata = fs.readFileSync('data.txt','utf8')
-//loadData
-function loadData() {
-  var apos = txtdata.search("!admins");
-  tempdata = [];
-  var temp0 = 0;
-  for(var i = apos+6; i<txtdata.length;i++){
-    if(txtdata[i]===','){
-      temp0++;
-      continue;
-    }else if (txtdata[i]===';') {
-      temp0 = 0;
-      break;
-    }
-    tempdata[temp0].append(txtdata[i]);
-  }
-  console.log("admins: "+tempdata);
-}
 
-//loadData();
+
+
+
+
+//loadData
+console.log(data);
 
 //Queue class
 /*
@@ -71,9 +76,7 @@ Queue.prototype.removeread = function() {
 var lineQueue = new Queue();
 //*/
 
-
-
-//configuration
+//configuration of logger
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
     colorize: true
@@ -85,93 +88,135 @@ var bot = new Discord.Client({
    autorun: true
 });
 
-function saveData(){
+bot.on('any', function(event) {
+  //console.log(event.t);
+  if(event.t == 'GUILD_CREATE'){
+    //console.log(event.d.members);
+    var o = event.d.members;
+    for(var i = 0; i<o.length; i++){
+      var oi = o[i];
+      var po = {
+        roles:oi.roles,
+        nick:oi.nick,
+        mute:oi.mute,
+        deaf:oi.deaf,
+        lastlogin:0,
+        admin:false,
+        id:oi.user.id,
+      };
+      users.push(po);
 
-}
 
-function send(id, message){
-    bot.sendMessage({
-                    to: id,
-                    message: message
-                });
-}
+    }
+    //console.log(users);
+  }
+});
 
-
+//bot initialization
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
-    send(mainchannelID,'Bot Online');
+    if(!silent) send(mainchannelID,'Bot Online');
 });
 
-console.log("Running and Listening")
+console.log("Running and Listening");
 
+//welcome message
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
-  var sms = greet.replace("TEMP",callback.id)
+  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace "temp"
   bot.createDMChannel(callback.id, function(call){
     for(var i = 0; i<greetDM.length; i++){
+      //DM the set messages
       send(callback.id,greetDM[i]);
     }
-  });
+  });//send the DM
+
   setTimeout(function(){
-    send(mainchannelID,sms);
-  },500);
-  console.log("new user, added to role:"+newcomerrole);
+    send(mainchannelID,sms);//send the message after .5 seconds
+  },500);//delayed server welcome
+
+  console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
+  console.log(callback);//log data
+
+  //add the user to the role, somehow not working
     bot.addToRole({
       serverID:serverID,
       userID:callback.id,
       roleID:newcomerrole,
     });
+    //add to users array
+    var oi = callback;
+    var po = {
+      roles:oi.roles,
+      nick:oi.nick,
+      mute:oi.mute,
+      deaf:oi.deaf,
+      lastlogin:0,
+      admin:false,
+      id:oi.user.id,
+    };
+    users.push(po);
  });
 
 
-//listen
+//listen for message commands
 bot.on('message', function (user, userID, channelID, message, evt) {
   //mainchannelID = channelID;
   //console.log(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
+
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
         args = args.splice(1);
         switch(cmd) {
-            // !ping
+
+            default:
+            //unreconized command
+            send(channelID,"Command not reconized");
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            break;
+            //ping for debugging
             case 'ping':
+            var sent = false;
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
-                //set admin
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
+                //send pong
+
+                sent = true;
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
-
+            if(!sent){
+              send(channelID,"Command not reconized");
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            }else{
+              bot.sendMessage({
+                  to: channelID,
+                  message: 'Pong!'
+              });
+            }
             break;
 
-            case 'imtheadmin':
-            if(!admin){
-              console.log("Adding "+user+":"+userID+" as an admin");
-              admins.push(userID);
-              console.log(admins);
-              send(userID,"YOU ARE NOW THE ADMIN");
-              admin = true;
-              }else{
-                console.log("!!WARNING!!: User "+user+":"+userID+" attempted to add themselves to admin");}
-            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-            break;
-
+            //fsa summon, requested by AuroraTheFirst
             case 'summon':
             for(var i = 0; i<admins.length; i++){
               if(admins[i]==userID){
-                //set admin
+                //send message
                 send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
                 bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
               }
             }
 
+            break;
+
+            case 'rules':
+            for(var i = 0; i<greetDM.length; i++){
+              //DM the set messages
+              send(userID,greetDM[i]);
+            }
             break;
 
             case 'debugid':
@@ -183,14 +228,90 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
             }
             break;
+
+            case 'force':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XD
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+                bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) console.log(err);});
+              }
+            }
+            break;
+
+            case 'mute':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XDDDD
+                console.log("!!!!! "+args);
+                bot.mute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              }
+            }
+            break;
+
+            case 'unmute':
+            for(var i = 0; i<admins.length; i++){
+              if(admins[i]==userID){
+                //XDDDD
+                bot.unmute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
+                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              }
+            }
+            break;
+
          }
      }
+
 });
 
 bot.on('disconnect', function(errMsg, code) {
 if(code === 0){
-    console.log("")
+    console.log("Connection Failed")
 }else{
     console.log("DISCONNECTED FROM SERVER");
 }
 });
+
+//console commands
+rl.on('line', (input) => {
+  switch(input){
+  case 'end':
+    send(mainchannelID,"Bot Offline");
+    bot.disconnect();
+  break;
+  case 'restart':
+    send(mainchannelID,"Bot Restarting");
+    bot.disconnect();
+    break;
+
+  case 'connect':
+    bot.connect();
+    break;
+  }
+});
+
+
+
+
+
+/*******************************************************************************
+                                  FUNCTIONS
+*******************************************************************************/
+//save data
+function saveData(){
+    var json = JSON.stringify(data); //convert it back to a string
+    fs.writeFile('data.json', json, 'utf8', function(err){//write to file
+      if(err){//log any errors
+        console.log(err);
+      }
+    }); //write
+}
+
+//send message
+function send(id, message){
+    bot.sendMessage({
+                    to: id,
+                    message: message
+                });
+}
