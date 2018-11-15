@@ -124,7 +124,7 @@ console.log("Running and Listening");
 
 //welcome message
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
-  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace
+  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace "temp"
   bot.createDMChannel(callback.id, function(call){
     for(var i = 0; i<greetDM.length; i++){
       //DM the set messages
