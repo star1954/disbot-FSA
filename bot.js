@@ -84,15 +84,23 @@ var bot = new Discord.Client({
 });
 
 bot.on('any', function(event) {
-  console.log(event.t);
+  //console.log(event.t);
   if(event.t == 'GUILD_CREATE'){
     //console.log(event.d.members);
     var o = event.d.members;
     for(var i = 0; i<o.length; i++){
-      users.push(o[i]);
+      var po = {
+        roles:o.roles,
+        nick:o.nick,
+        mute:o.mute,
+        deaf:o.deaf,
+        //username:o.user.username,
+        //id:o.user.id,
+      };
+      users.push(o[i].user);
 
     }
-    console.log(users);
+    //console.log(users);
   }
 });
 
@@ -102,9 +110,6 @@ bot.on('ready', function (evt) {
     logger.info('Logged in as: ');
     logger.info(bot.username + ' - (' + bot.id + ')');
     if(!silent) send(mainchannelID,'Bot Online');
-    var temp =bot.getMembers({limit:200});
-
-    console.log(temp);
 });
 
 console.log("Running and Listening");
@@ -122,6 +127,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
     send(mainchannelID,sms);//send the message after .5 seconds
   },500);
   console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
+  console.log(callback);
   //add the user to the role, somehow not working
     bot.addToRole({
       serverID:serverID,
