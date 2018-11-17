@@ -6,7 +6,7 @@ var data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
 var fs = require('fs');//file read system
 const silent = true; //silent online message for testing
-var admins = ["234843909291769856","255535608015880193"];
+var admins = [];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["Hello","Welcome to FSA"];
 const rl = readline.createInterface({
@@ -105,11 +105,17 @@ bot.on('any', function(event) {
         admin:false,
         id:oi.user.id,
       };
-      users.push(po);
-
-
-    }
+      var push = true;
+      for(var i = 0; i<users.length; i++){
+        if(users[i].id == po.id) push = false;
+      }
+      if(push) users.push(po);
+      for(var i = 0; i<users.length; i++){
+        if(users[i].admin) admins.push(users[i].id);
+      }
+      console.log(admins);
     //console.log(users);
+    }
   }
 });
 
@@ -149,14 +155,14 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
     //add to users array
     var oi = callback;
     var po = {
-      name:oi.user.username,
+      name:oi.username,
       roles:oi.roles,
       nick:oi.nick,
       mute:oi.mute,
       deaf:oi.deaf,
       lastlogin:0,
       admin:false,
-      id:oi.user.id,
+      id:oi.id,
     };
     users.push(po);
  });
