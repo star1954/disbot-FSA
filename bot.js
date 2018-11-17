@@ -189,14 +189,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             //ping for debugging
             case 'ping':
             var sent = false;
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //send pong
-
-                sent = true;
-                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-              }
-            }
+            isAdmin(userID,function(){
+              sent = true;
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            });
             if(!sent){
               send(channelID,"Command not reconized");
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
@@ -210,13 +206,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
             //fsa summon, requested by AuroraTheFirst
             case 'summon':
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //send message
-                send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
-                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-              }
-            }
+            isAdmin(userID,function(){
+              send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            });
 
             break;
 
@@ -228,46 +221,18 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
 
             case 'debugid':
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //set admin
-                send(channelID,mainchannelID);
-              }
-
-            }
+            isAdmin(userID,function(){
+              send(channelID,mainchannelID);
+            });
             break;
 
             case 'force':
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //XD
-                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-                bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) console.log(err);});
-              }
-            }
+            //force user into a voice channel
+            isAdmin(userID,function(){
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+              bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) console.log(err);});
+            });
             break;
-
-            case 'mute':
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //XDDDD
-                console.log("!!!!! "+args);
-                bot.mute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
-                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-              }
-            }
-            break;
-
-            case 'unmute':
-            for(var i = 0; i<admins.length; i++){
-              if(admins[i]==userID){
-                //XDDDD
-                bot.unmute({userID:args,serverID:serverID},function(err){if(err) console.log(err);});
-                bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-              }
-            }
-            break;
-
          }
      }
 
@@ -326,4 +291,14 @@ function send(id, message){
                     to: id,
                     message: message
                 });
+}
+
+//check admin
+function isAdmin(id,callback = function(){}){
+  for(var i = 0; i<admins.length; i++){
+    if(admins[i]==userID){
+      //callback
+      callback();
+    }
+  }
 }
