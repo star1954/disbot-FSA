@@ -1,6 +1,7 @@
 var Discord = require('discord.io');//discord bot stuff
 var logger = require('winston');//idfk
-var date = require('time');//time and date
+const Date = new Date();
+var time = Date.now;//time in millis
 var readline = require('readline');//readline for console commands
 var data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
@@ -15,6 +16,7 @@ const rl = readline.createInterface({
 });
 var users = [];
 var muted = [];
+var log = "";
 //example
 
 const star1954 ={
@@ -113,7 +115,7 @@ bot.on('any', function(event) {
       for(var i = 0; i<users.length; i++){
         if(users[i].admin) admins.push(users[i].id);
       }
-      console.log(admins);
+      users.length;
     //console.log(users);
     }
   }
@@ -210,7 +212,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             });
-
             break;
 
             case 'rules':
@@ -248,6 +249,14 @@ if(code === 0){
 
 //console commands
 rl.on('line', (input) => {
+  log="/n["+Date.now+"]: "+input;
+  fs.open('./log.txt', 'a', function(e, id) {
+   fs.write(id, log, 0, 'utf8', function(err){
+     fs.close(id, (err) => {
+    if (err) throw err;
+  });
+   });
+ });
   switch(input){
   case 'end':
     send(mainchannelID,"Bot Offline");
@@ -266,6 +275,7 @@ rl.on('line', (input) => {
     saveData();
   break;
   }
+
 });
 
 
