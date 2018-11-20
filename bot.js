@@ -115,7 +115,7 @@ bot.on('any', function(event) {
       for(var x = 0; x<users.length; x++){
         if(users[i].admin){admins.push(users[i].id);}
       }
-      users.length;
+      //users.length;
     //logData(users);
     }
   }
