@@ -108,12 +108,12 @@ bot.on('any', function(event) {
         id:oi.user.id,
       };
       var push = true;
-      for(var i = 0; i<users.length; i++){
-        if(users[i].id == po.id) push = false;
+      for(var x = 0; x<users.length; x++){
+        if(users[x].id == po.id) push = false;
       }
       if(push) users.push(po);
-      for(var i = 0; i<users.length; i++){
-        if(users[i].admin) admins.push(users[i].id);
+      for(var x = 0; x<users.length; x++){
+        if(users[i].admin){admins.push(users[i].id);}
       }
       users.length;
     //logData(users);
@@ -247,7 +247,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
 bot.on('disconnect', function(errMsg, code) {
 if(code === 0){
-    logData("Connection Failed")
+    logData("Connection Failed");
 }else{
     logData("DISCONNECTED FROM SERVER");
 }
