@@ -6,7 +6,7 @@ var readline = require('readline');//readline for console commands
 var data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
 var fs = require('fs');//file read system
-const silent = true; //silent online message for testing
+const silent = false; //silent online message for testing
 var admins = ['234843909291769856','255535608015880193'];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["Hello","Welcome to FSA"];
@@ -30,12 +30,12 @@ const star1954 ={
   admin:true,
 };
 //Channel ID for summon and auto-role
-/*
+//*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-//*
+/*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
@@ -113,7 +113,7 @@ bot.on('any', function(event) {
       }
       if(push) users.push(po);
       for(var x = 0; x<users.length; x++){
-        if(users[i].admin){admins.push(users[i].id);}
+        //if(users[i].admin){admins.push(users[i].id);}
       }
       //users.length;
     //logData(users);
@@ -311,11 +311,16 @@ function send(id, message){
 
 //check admin
 function isAdmin(id,callback = function(){}){
+  var s = false;
   for(var i = 0; i<admins.length; i++){
     if(admins[i]==id){
       //callback
       callback();
+      s = true;
     }
+  }
+  if(!s){
+    log("Failed Auth")
   }
 }
 

@@ -69,3 +69,15 @@
 [1542683858]>>asdf
 [1542683859]>>asdf
 [1542683859]>>asdf
+[1542684339]: Running and Listening
+[1542684339]: Running and Listening
+[1542684359]: Running and Listening
+[1542684359]: Running and Listening
+[1542686102]>>restart
+[1542686102]: DISCONNECTED FROM SERVER
+[1542686105]: Running and Listening
+[1542686105]: Running and Listening
+[1542689106]>>restart
+[1542689106]: DISCONNECTED FROM SERVER
+[1542689109]: Running and Listening
+[1542689109]: Running and Listening
