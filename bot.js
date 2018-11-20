@@ -30,53 +30,17 @@ const star1954 ={
   admin:true,
 };
 //Channel ID for summon and auto-role
-//*
+/*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-/*
+//*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
 
-
-
-
-
-
-//loadData
-logData(data);
-
-//Queue class
-/*
-
-function Queue(){
-	this.data = [];
-}
-
-Queue.prototype.add = function(inp){
-	this.data.unshift(inp);
-}
-Queue.prototype.last = function(){
-	return this.data[this.data.length-1];
-}
-Queue.prototype.first = function(){
-	return this.data[0];
-}
-Queue.prototype.remove = function(){
-	this.data.pop();
-}
-Queue.prototype.removeread = function() {
-	var read = this.last();
-	this.remove();
-	return this.last();
-};
-
-//test queue
-var lineQueue = new Queue();
-//*/
 
 //configuration of logger
 logger.remove(logger.transports.Console);
@@ -219,7 +183,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             });
             break;
 
-            case 'rules':
+            case 'rules'://messages rules to user
             for(var i = 0; i<greetDM.length; i++){
               //DM the set messages
               send(userID,greetDM[i]);
@@ -230,7 +194,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'debugid':
             isAdmin(userID,function(){
               send(channelID,mainchannelID);
-            });
+            });//prints out an ID
             break;
 
             case 'force':
@@ -240,6 +204,25 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) logData(err);});
             });
             break;
+
+            case 'shut':
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            isAdmin(userID, asdf=>{
+              var target = idFromName(args[1]);//get target ID
+              console.log(args[0]+target);
+              if(target==undefined){
+                target = '253592101844025345';
+              }//target exists
+                //shut the ____ up amon!
+                var rand = Math.random();
+                if(rand<0.3){
+                send(channelID,"<@"+target+"> needs to stop before they're teamkilled by the wildcards");
+              }else if(rand<0.8){
+                send(channelID,"<@"+target+"> needs to stop before they're decimated by an orbital strike");
+              }else{
+                send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
+              }
+            })
          }
      }
 
@@ -280,6 +263,10 @@ rl.on('line', (input) => {
   case 'savedata':
     saveData();
   break;
+
+  case 'debugdata':
+  logData(users[0].name);
+  break;
   }
 
 });
@@ -294,6 +281,7 @@ rl.on('line', (input) => {
 //save data
 function saveData(){
     var json = JSON.stringify(users); //convert it back to a string
+    //logData("DEBUG: "+json);
     fs.writeFile('./data.json', json, 'utf8', function(err){//write to file
       if(err){//log any errors
         logData(err);
@@ -336,4 +324,24 @@ function logData(data) {
   });
    });
  });
+}
+
+//get userID from username and vise versa
+function idFromName(name,callback =function(id){}) {
+  for(var i = 0; i<users.length; i++){
+    var u = users[i];
+    if(u.name === name){
+      callback(u.id);
+      return u.id;
+    }
+  }
+}
+function nameFromId(name,callback =function(name){}) {
+  for(var i = 0; i<users.length; i++){
+    var u = users[i];
+    if(u.id === name){
+      callback(u.name);
+      return u.name;
+    }
+  }
 }

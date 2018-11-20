@@ -81,3 +81,59 @@
 [1542689106]: DISCONNECTED FROM SERVER
 [1542689109]: Running and Listening
 [1542689109]: Running and Listening
+[1542691669]: Running and Listening
+[1542691727]: Running and Listening
+[1542691758]: Running and Listening
+[1542691805]: Running and Listening
+[1542691838]: Running and Listening
+[1542691859]>>savedata
+[1542691885]: Running and Listening
+[1542691885]: null
+[1542691885]: GUILD_CREATE
+[1542691885]: GUILD_CREATE
+[1542691885]: MESSAGE_CREATE
+[1542691905]: Running and Listening
+[1542691905]: null
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: [object Object],[object Object],[object Object],[object Object]
+[1542691906]: MESSAGE_CREATE
+[1542691919]>>savedata
+[1542691931]: TYPING_START
+[1542691940]: TYPING_START
+[1542691944]: TYPING_START
+[1542691945]: MESSAGE_CREATE
+[1542691946]: TYPING_START
+[1542691947]: null
+[1542691949]: MESSAGE_CREATE
+[1542691949]: MESSAGE_CREATE
+[1542691971]: TYPING_START
+[1542691978]: MESSAGE_CREATE
+[1542691980]: TYPING_START
+[1542691988]: null
+[1542692029]: null
+[1542692053]: Running and Listening
+[1542692067]: Running and Listening
+[1542692075]>>debug
+[1542692078]: [object Object]
+[1542692078]: [object Object]
+[1542692092]: Running and Listening
+[1542692096]: 234843909291769856
+[1542692096]: 234843909291769856
+[1542692107]: Running and Listening
+[1542692111]: star1954
+[1542692111]: star1954
+[1542692153]: Running and Listening
+[1542692155]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692155]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692233]: Running and Listening
+[1542692236]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692236]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692249]: Running and Listening
+[1542692251]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692251]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
+[1542692343]: Running and Listening
+[1542692394]: Running and Listening
