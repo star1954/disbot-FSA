@@ -1,13 +1,13 @@
 var Discord = require('discord.io');//discord bot stuff
 var logger = require('winston');//idfk
-const Date = new Date();
-var time = Date.now;//time in millis
+const time = require('time');
+var millis = new time.time();
 var readline = require('readline');//readline for console commands
 var data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
 var fs = require('fs');//file read system
 const silent = true; //silent online message for testing
-var admins = [];
+var admins = ['234843909291769856','255535608015880193'];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = ["Hello","Welcome to FSA"];
 const rl = readline.createInterface({
@@ -15,7 +15,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 var users = [];
-var muted = [];
+var temp0,temp1,temp2;
 var log = "";
 //example
 
@@ -30,12 +30,12 @@ const star1954 ={
   admin:true,
 };
 //Channel ID for summon and auto-role
-//*
+/*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-/*
+//*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
@@ -47,7 +47,7 @@ var mainchannelID = "509889611066245122";
 
 
 //loadData
-console.log(data);
+logData(data);
 
 //Queue class
 /*
@@ -91,9 +91,9 @@ var bot = new Discord.Client({
 });
 
 bot.on('any', function(event) {
-  console.log(event.t);
+  //logData(event.t);
   if(event.t == 'GUILD_CREATE'){
-    //console.log(event.d.members);
+    //logData(event.d.members);
     var o = event.d.members;
     for(var i = 0; i<o.length; i++){
       var oi = o[i];
@@ -116,7 +116,7 @@ bot.on('any', function(event) {
         if(users[i].admin) admins.push(users[i].id);
       }
       users.length;
-    //console.log(users);
+    //logData(users);
     }
   }
 });
@@ -129,7 +129,7 @@ bot.on('ready', function (evt) {
     if(!silent) send(mainchannelID,'Bot Online');
 });
 
-console.log("Running and Listening");
+logData("Running and Listening");
 
 //welcome message
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
@@ -145,8 +145,8 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
     send(mainchannelID,sms);//send the message after .5 seconds
   },500);//delayed server welcome
 
-  console.log("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
-  console.log(callback);//log data
+  logData("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
+  logData(callback);//log data
 
   //add the user to the role, somehow not working
     bot.addToRole({
@@ -173,10 +173,10 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
 //listen for message commands
 bot.on('message', function (user, userID, channelID, message, evt) {
   //mainchannelID = channelID;
-  //console.log(bot.getAllUsers());
+  //logData(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-
+    //logData("DEBUG"+userID);
     if (message.substring(0, 1) == '!') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -209,7 +209,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             //fsa summon, requested by AuroraTheFirst
             case 'summon':
             isAdmin(userID,function(){
-              send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>")
+              var ar = "";
+              for(var i = 0; i<args.length; i++){
+                ar=ar+" "+args[i];
+              }
+              send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>");
+              setTimeout(function(){send(mainchannelID,"**"+user+": "+ar+'**');},100);
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             });
             break;
@@ -218,6 +223,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             for(var i = 0; i<greetDM.length; i++){
               //DM the set messages
               send(userID,greetDM[i]);
+              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             }
             break;
 
@@ -231,7 +237,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             //force user into a voice channel
             isAdmin(userID,function(){
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-              bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) console.log(err);});
+              bot.moveUserTo({serverID: serverID, userID: args, channelID:"323941973247655938"},function(err){if(err) logData(err);});
             });
             break;
          }
@@ -241,17 +247,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
 bot.on('disconnect', function(errMsg, code) {
 if(code === 0){
-    console.log("Connection Failed")
+    logData("Connection Failed")
 }else{
-    console.log("DISCONNECTED FROM SERVER");
+    logData("DISCONNECTED FROM SERVER");
 }
 });
 
 //console commands
 rl.on('line', (input) => {
-  log="/n["+Date.now+"]: "+input;
+  log="\n["+time.time()+"]>>"+input;
   fs.open('./log.txt', 'a', function(e, id) {
-   fs.write(id, log, 0, 'utf8', function(err){
+   fs.write(id, log, null, 'utf8', function(err){
      fs.close(id, (err) => {
     if (err) throw err;
   });
@@ -290,7 +296,7 @@ function saveData(){
     var json = JSON.stringify(users); //convert it back to a string
     fs.writeFile('./data.json', json, 'utf8', function(err){//write to file
       if(err){//log any errors
-        console.log(err);
+        logData(err);
       }
     }); //write
 }
@@ -306,9 +312,23 @@ function send(id, message){
 //check admin
 function isAdmin(id,callback = function(){}){
   for(var i = 0; i<admins.length; i++){
-    if(admins[i]==userID){
+    if(admins[i]==id){
       //callback
       callback();
     }
   }
+}
+
+//log data
+function logData(data) {
+  log="\n["+time.time()+"]: "+data;//time marker and formatting
+
+  console.log(log);
+  fs.open('./log.txt', 'a', function(e, id) {
+   fs.write(id, log, null, 'utf8', function(err){
+     fs.close(id, (err) => {
+    if (err) throw err;
+  });
+   });
+ });
 }
