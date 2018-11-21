@@ -222,7 +222,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               }else{
                 send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
               }
-            })
+            });
          }
      }
 
@@ -265,7 +265,7 @@ rl.on('line', (input) => {
   break;
 
   case 'debugdata':
-  logData(users[0].name);
+  logData(idFromName('star1954'));
   break;
   }
 
