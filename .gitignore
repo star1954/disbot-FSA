@@ -61,3 +61,5 @@ typings/
 .next
 
 auth.json
+
+log.txt
