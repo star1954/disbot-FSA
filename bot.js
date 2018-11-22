@@ -9,13 +9,20 @@ var fs = require('fs');//file read system
 const silent = false; //silent online message for testing
 var admins = ['234843909291769856','255535608015880193'];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
-const greetDM = ["Hello","Welcome to FSA"];
+const greetDM = [
+  "Hello! Welcome to the the FSA server, led by Aurora the first! While here, we want your experience to be a healthy and satisfactory one for both you and your fellow combat personnel, and to do this, we want you to take some time to follow a few rules.",
+  "1. Please keep chats to their appropriate chat room, we don’t want to see nsfw in general",
+  "2. Be respectful of others and their opinions, even if they don’t agree with you",
+  "3. Do NOT under any circumstances spam chat, it’s unpleasant for everyone, and filling chat with your trash hides the important stuff",
+  "4. Please respect the outfit leader, as your leader, I want to be your friend, and I can take a good amount of verbal roughhousing, but please, not too much!",
+  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!"
+];
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 var users = [];
-var temp0,temp1,temp2;
+var temp0,temp1,temp2,ran,runs;
 var log = "";
 //example
 
@@ -99,10 +106,7 @@ logData("Running and Listening");
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
   var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace "temp"
   bot.createDMChannel(callback.id, function(call){
-    for(var i = 0; i<greetDM.length; i++){
-      //DM the set messages
-      send(callback.id,greetDM[i]);
-    }
+    sendRules(userID);
   });//send the DM
 
   setTimeout(function(){
@@ -184,11 +188,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
 
             case 'rules'://messages rules to user
-            for(var i = 0; i<greetDM.length; i++){
-              //DM the set messages
-              send(userID,greetDM[i]);
-              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-            }
+            sendRules(userID);
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             break;
 
             case 'debugid':
@@ -222,7 +223,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               }else{
                 send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
               }
-            })
+            });
          }
      }
 
@@ -265,7 +266,7 @@ rl.on('line', (input) => {
   break;
 
   case 'debugdata':
-  logData(users[0].name);
+  logData(idFromName('star1954'));
   break;
   }
 
@@ -343,5 +344,22 @@ function nameFromId(name,callback =function(name){}) {
       callback(u.name);
       return u.name;
     }
+  }
+}
+
+//list rules
+function sendRules(userID){
+  runs = greetDM.length;
+  ran = 0;
+  temp0 = userID;
+    //DM the set messages
+    setTimeout(Support1,100);
+}
+//support for the previous function
+function Support1(){
+  ran++;
+  send(temp0,greetDM[ran-1]);
+  if(ran<runs){
+    setTimeout(Support1,100);
   }
 }
