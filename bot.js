@@ -10,12 +10,12 @@ const silent = false; //silent online message for testing
 var admins = ['234843909291769856','255535608015880193'];
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = [
-  "Hello! Welcome to the the FSA server, led by Aurora the first! While here, we want your experience to be a healthy and satisfactory one for both you and your fellow combat personnel, and to do this, we want you to take some time to follow a few rules.",
-  "1. Please keep chats to their appropriate chat room, we don’t want to see nsfw in general",
-  "2. Be respectful of others and their opinions, even if they don’t agree with you",
-  "3. Do NOT under any circumstances spam chat, it’s unpleasant for everyone, and filling chat with your trash hides the important stuff",
-  "4. Please respect the outfit leader, as your leader, I want to be your friend, and I can take a good amount of verbal roughhousing, but please, not too much!",
-  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!"
+  "Hello! Welcome to the the FSA server, led by Aurora the first! While here, we want your experience to be a healthy and satisfactory one for both you and your fellow combat personnel, and to do this, we want you to take some time to follow a few rules.\n \n",
+  "1. Please keep chats to their appropriate chat room, we don’t want to see nsfw in general\n",
+  "2. Be respectful of others and their opinions, even if they don’t agree with you\n",
+  "3. Do NOT under any circumstances spam chat, it’s unpleasant for everyone, and filling chat with your trash hides the important stuff\n",
+  "4. Please respect the outfit leader, as your leader, I want to be your friend, and I can take a good amount of verbal roughhousing, but please, not too much!\n",
+  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!",
 ];
 const rl = readline.createInterface({
   input: process.stdin,
@@ -350,16 +350,10 @@ function nameFromId(name,callback =function(name){}) {
 //list rules
 function sendRules(userID){
   runs = greetDM.length;
-  ran = 0;
-  temp0 = userID;
-    //DM the set messages
-    setTimeout(Support1,100);
+  var message = "";
+  for(var i = 0; i<runs; i++){
+    message += greetDM[i]+"\n";
+  }
+  send(userID,message);
 }
 //support for the previous function
-function Support1(){
-  ran++;
-  send(temp0,greetDM[ran-1]);
-  if(ran<runs){
-    setTimeout(Support1,100);
-  }
-}
