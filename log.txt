@@ -1,139 +1,72 @@
 ---LOGGING START---
 
-[1542682522]: Running and Listening
-[1542682522]: Running and Listening
-[1542682550]>> end
-[1542682550]: DISCONNECTED FROM SERVER
-[1542682571]: Running and Listening
-[1542682571]: Running and Listening
-[1542682576]>>test
-[1542682722]>>end
-[1542682723]: DISCONNECTED FROM SERVER
-[1542682725]: Running and Listening
-[1542682725]: Running and Listening
-[1542682746]: Running and Listening
-[1542682746]: Running and Listening
-[1542682780]: Running and Listening
-[1542682780]: Running and Listening
-[1542682824]: Running and Listening
-[1542682824]: Running and Listening
-[1542682827]: DEBUG234843909291769856
-[1542682827]: DEBUG514264986231635980
-[1542682861]: Running and Listening
-[1542682861]: Running and Listening
-[1542682929]: Running and Listening
-[1542682929]: Running and Listening
-[1542682936]: DEBUG234843909291769856
-[1542682936]: DEBUG514264986231635980
-[1542682971]: Running and Listening
-[1542682971]: Running and Listening
-[1542682974]: DEBUG234843909291769856
-[1542682975]: DEBUG514264986231635980
-[1542682979]: DEBUG234843909291769856
-[1542682979]: DEBUG514264986231635980
-[1542682984]: DEBUG234843909291769856
-[1542682984]: DEBUG514264986231635980
-[1542683060]: DEBUG234843909291769856
-[1542683066]: DEBUG234843909291769856
-[1542683071]: DEBUG255535608015880193
-[1542683081]: DEBUG234843909291769856
-[1542683089]: DEBUG234843909291769856
-[1542683092]: DEBUG234843909291769856
-[1542683094]: DEBUG255535608015880193
-[1542683098]: DEBUG255535608015880193
-[1542683103]: DEBUG234843909291769856
-[1542683106]: DEBUG255535608015880193
-[1542683110]: DEBUG234843909291769856
-[1542683115]: DEBUG255535608015880193
-[1542683120]: DEBUG255535608015880193
-[1542683127]: DEBUG234843909291769856
-[1542683166]: Running and Listening
-[1542683166]: Running and Listening
-[1542683182]: Running and Listening
-[1542683182]: Running and Listening
-[1542683278]: Running and Listening
-[1542683278]: Running and Listening
-[1542683294]: Running and Listening
-[1542683294]: Running and Listening
-[1542683311]: Running and Listening
-[1542683311]: Running and Listening
-[1542683341]: Running and Listening
-[1542683341]: Running and Listening
-[1542683408]: Running and Listening
-[1542683408]: Running and Listening
-[1542683433]: Running and Listening
-[1542683433]: Running and Listening
-[1542683855]: Running and Listening
-[1542683855]: Running and Listening
-[1542683857]>>asdf
-[1542683858]>>asdf
-[1542683859]>>asdf
-[1542683859]>>asdf
-[1542684339]: Running and Listening
-[1542684339]: Running and Listening
-[1542684359]: Running and Listening
-[1542684359]: Running and Listening
-[1542686102]>>restart
-[1542686102]: DISCONNECTED FROM SERVER
-[1542686105]: Running and Listening
-[1542686105]: Running and Listening
-[1542689106]>>restart
-[1542689106]: DISCONNECTED FROM SERVER
-[1542689109]: Running and Listening
-[1542689109]: Running and Listening
-[1542691669]: Running and Listening
-[1542691727]: Running and Listening
-[1542691758]: Running and Listening
-[1542691805]: Running and Listening
-[1542691838]: Running and Listening
-[1542691859]>>savedata
-[1542691885]: Running and Listening
-[1542691885]: null
-[1542691885]: GUILD_CREATE
-[1542691885]: GUILD_CREATE
-[1542691885]: MESSAGE_CREATE
-[1542691905]: Running and Listening
-[1542691905]: null
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: [object Object],[object Object],[object Object],[object Object]
-[1542691906]: MESSAGE_CREATE
-[1542691919]>>savedata
-[1542691931]: TYPING_START
-[1542691940]: TYPING_START
-[1542691944]: TYPING_START
-[1542691945]: MESSAGE_CREATE
-[1542691946]: TYPING_START
-[1542691947]: null
-[1542691949]: MESSAGE_CREATE
-[1542691949]: MESSAGE_CREATE
-[1542691971]: TYPING_START
-[1542691978]: MESSAGE_CREATE
-[1542691980]: TYPING_START
-[1542691988]: null
-[1542692029]: null
-[1542692053]: Running and Listening
-[1542692067]: Running and Listening
-[1542692075]>>debug
-[1542692078]: [object Object]
-[1542692078]: [object Object]
-[1542692092]: Running and Listening
-[1542692096]: 234843909291769856
-[1542692096]: 234843909291769856
-[1542692107]: Running and Listening
-[1542692111]: star1954
-[1542692111]: star1954
-[1542692153]: Running and Listening
-[1542692155]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692155]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692233]: Running and Listening
-[1542692236]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692236]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692249]: Running and Listening
-[1542692251]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692251]: DEBUG: [{"name":"star1954","roles":["509824083815563268"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"234843909291769856"},{"name":"Aurora the First","roles":[],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"255535608015880193"},{"name":"15943","roles":["509824081600970753"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"498757346772910100"},{"name":"TestBot","roles":["514266781431496707"],"nick":null,"mute":false,"deaf":false,"lastlogin":0,"admin":false,"id":"514264986231635980"}]
-[1542692343]: Running and Listening
-[1542692394]: Running and Listening
+[1542789048]: Running and Listening
+[1542789454]: Running and Listening
+[1542789473]: Running and Listening
+[1542789514]: Running and Listening
+[1542789519]: DEBUG: SENT
+[1542789519]: DEBUG: SENT
+[1542789519]: DEBUG: SENT
+[1542789519]: DEBUG: SENT
+[1542789519]: DEBUG: SENT
+[1542789519]: DEBUG: SENT
+[1542789602]: Running and Listening
+[1542789614]: DEBUG: SENT
+[1542789614]: DEBUG: SENT
+[1542789614]: DEBUG: SENT
+[1542789614]: DEBUG: SENT
+[1542789614]: DEBUG: SENT
+[1542789614]: DEBUG: SENT
+[1542789723]: Running and Listening
+[1542789727]: DEBUG: SENT
+[1542789727]: DEBUG: SENT
+[1542789727]: DEBUG: SENT
+[1542789727]: DEBUG: SENT
+[1542789727]: DEBUG: SENT
+[1542789727]: DEBUG: SENT
+[1542789743]: Running and Listening
+[1542789758]: Running and Listening
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789761]: DEBUG
+[1542789796]: Running and Listening
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789800]: undefined
+[1542789880]: Running and Listening
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789886]: undefined
+[1542789887]: undefined
+[1542789887]: undefined
+[1542789887]: undefined
+[1542790028]: Running and Listening
+[1542790419]: Running and Listening
+[1542790446]: Running and Listening
+[1542790535]: Running and Listening
+[1542790636]: Running and Listening
+[1542790838]: Running and Listening
