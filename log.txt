@@ -1,2 +1,21 @@
 ---LOGGING START---
 
+
+[1542860257]: Running and Listening
+[1542860279]: Running and Listening
+[1542862365]: Running and Listening
+[1542862388]>>restart
+[1542862388]: DISCONNECTED FROM SERVER
+[1542862392]: Running and Listening
+[1542862986]: [object Object]
+[1542862986]: [object Object]
+[1542863469]: Running and Listening
+[1542863486]: [object Object]
+[1542863486]: [object Object]
+[1542874926]: Connection Failed
+[1542921037]: Running and Listening
+[1542961434]: Connection Failed
+[1542967387]: Running and Listening
+[1542967508]: Running and Listening
+[1542967510]: Retrying in 10 seconds
+[1542967510]: Retrying in 10 seconds

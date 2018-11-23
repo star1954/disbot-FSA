@@ -37,12 +37,12 @@ const star1954 ={
   admin:true,
 };
 //Channel ID for summon and auto-role
-/*
+//*
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-//*
+/*
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
@@ -106,7 +106,7 @@ logData("Running and Listening");
 bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
   var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace "temp"
   bot.createDMChannel(callback.id, function(call){
-    sendRules(userID);
+    sendRules(callback.id);
   });//send the DM
 
   setTimeout(function(){
@@ -232,6 +232,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 bot.on('disconnect', function(errMsg, code) {
 if(code === 0){
     logData("Connection Failed");
+    logData("Retrying in 10 seconds")
+    setTimeout(function(){bot.connect();},10000);
 }else{
     logData("DISCONNECTED FROM SERVER");
 }
@@ -309,7 +311,7 @@ function isAdmin(id,callback = function(){}){
     }
   }
   if(!s){
-    log("Failed Auth")
+    logData("Failed Auth");
   }
 }
 
