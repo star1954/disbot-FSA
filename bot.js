@@ -209,7 +209,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'shut':
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             isAdmin(userID, asdf=>{
-              var target = idFromName(args[1]);//get target ID
+              var target = idFromName(args[0]);//get target ID
               console.log(args[0]+target);
               if(target==undefined){
                 target = '253592101844025345';
@@ -224,6 +224,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
               }
             });
+            break;
          }
      }
 
