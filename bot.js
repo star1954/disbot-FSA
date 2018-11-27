@@ -1,3 +1,7 @@
+
+/*******************************************************************************
+                                  Variables
+*******************************************************************************/
 var Discord = require('discord.io');//discord bot stuff
 var logger = require('winston');//idfk
 const time = require('time');
@@ -35,6 +39,7 @@ const star1954 ={
   id:'234843909291769856',
   lastlogin:0,
   admin:true,
+  offender:0,
 };
 //Channel ID for summon and auto-role
 //*
@@ -47,7 +52,46 @@ const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
+/*******************************************************************************
+                                  Loop
+*******************************************************************************/
 
+function mainLoop() {//updating user data depending on situation
+  temp0, temp1, temp2 = undefined;
+  for(var i = 0; i< users.length; i++){
+    if(users[i]!== undefined){
+      var o = users[i];
+      if(o.offender>=15){
+        o.mute = true;}//muting offenders
+      temp1 = false;
+      //auto adding admins
+      if(o.admin){for(var i = 0; i<admins.list; i++){if(admins[i]==o.id){
+          temp1 = true;
+        }}
+        admins.push(o.id);
+      }
+      //making mutes mute
+      if(o.mute){
+        bot.mute({
+          userID:o.id,
+          serverID:serverID
+        });
+      }else{
+        bot.unmute({
+          serverID:serverID,
+          userID:o.id
+        });
+      }
+
+
+    }
+  }
+}
+setInterval(mainLoop,1000)
+
+/*******************************************************************************
+                                  Events
+*******************************************************************************/
 
 //configuration of logger
 logger.remove(logger.transports.Console);
@@ -57,7 +101,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 // Initialize Discord Bot
 var bot = new Discord.Client({
-   token: auth.token,
+   token: auth.token0,
    autorun: true
 });
 
@@ -77,6 +121,7 @@ bot.on('any', function(event) {
         lastlogin:0,
         admin:false,
         id:oi.user.id,
+        offender:0,
       };
       var push = true;
       for(var x = 0; x<users.length; x++){
@@ -133,6 +178,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
       lastlogin:0,
       admin:false,
       id:oi.id,
+      offender:0,
     };
     users.push(po);
  });
@@ -210,23 +256,30 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             isAdmin(userID, asdf=>{
               var target = idFromName(args[0]);//get target ID
+              var o = objectFromId(target);
               console.log(args[0]+target);
               if(target==undefined){
-                target = '253592101844025345';
+                o = objectFromId('253592101844025345');
               }//target exists
+
+              //offender Index:
+              logData("Offender: "+ o.name+"\n VIOLATION INDEX of user: "+o.offender+1);
+
                 //shut the ____ up amon!
                 var rand = Math.random();
                 if(rand<0.3){
-                send(channelID,"<@"+target+"> needs to stop before they're teamkilled by the wildcards");
+                send(channelID,"<@"+o.id+"> needs to stop before they're teamkilled by the wildcards");
               }else if(rand<0.8){
-                send(channelID,"<@"+target+"> needs to stop before they're decimated by an orbital strike");
+                send(channelID,"<@"+o.id+"> needs to stop before they're decimated by an orbital strike");
               }else{
-                send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
+                send(channelID,"<@"+o.id+"> needs to stop before they're exiled to AutX");
               }
             });
             break;
          }
      }
+
+
 
 });
 
@@ -237,6 +290,7 @@ if(code === 0){
     setTimeout(function(){bot.connect();},10000);
 }else{
     logData("DISCONNECTED FROM SERVER");
+    saveData();
 }
 });
 
@@ -312,7 +366,9 @@ function isAdmin(id,callback = function(){}){
     }
   }
   if(!s){
-    logData("Failed Auth");
+    var o = objectFromId();
+    logData("Failed Auth: "+ o.name+"\n VIOLATION INDEX: "+o.offender+1);
+    o.offender++;
   }
 }
 
@@ -349,7 +405,15 @@ function nameFromId(name,callback =function(name){}) {
     }
   }
 }
-
+function objectFromId(name,callback =function(name){}){
+  for(var i = 0; i<users.length; i++){
+    var u = users[i];
+    if(u.id === name){
+      callback(u);
+      return u;
+    }
+  }
+}
 //list rules
 function sendRules(userID){
   runs = greetDM.length;
