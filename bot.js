@@ -263,6 +263,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               }//target exists
 
               //offender Index:
+              o.offender+=2;
               logData("Offender: "+ o.name+"\n VIOLATION INDEX of user: "+o.offender+1);
 
                 //shut the ____ up amon!
