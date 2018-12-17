@@ -331,7 +331,7 @@ if(code === 0){
 }
 });
 
-//console commands
+//console commands 
 rl.on('line', (input) => {
   log="\n["+time.time()+"]>>"+input;
   fs.open('./log.txt', 'a', function(e, id) {
