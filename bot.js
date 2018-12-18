@@ -1,13 +1,23 @@
-var Discord = require('discord.io');//discord bot stuff
-var logger = require('winston');//idfk
+
+/*******************************************************************************
+                                  Variables
+*******************************************************************************/
+let Discord = require('discord.io');//discord bot stuff
+let logger = require('winston');//idfk, logger?
 const time = require('time');
-var millis = new time.time();
-var readline = require('readline');//readline for console commands
-var data = require('./data.json');//user data
+let millis = new time.time();
+let readline = require('readline');//readline for console commands
+let data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
-var fs = require('fs');//file read system
+let fs = require('fs');//file read system
 const silent = false; //silent online message for testing
-var admins = ['234843909291769856','255535608015880193'];
+let admins = ['234843909291769856','255535608015880193'];
+/*/
+var roles = ['368640999112835075','368640962253291521','324342883194765322','324342717641654282'];
+//*/
+//*/
+let roles = ['509824081600970753','516877427822166026','516877459870842882','516877474936913921'];
+//*/
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = [
   "Hello! Welcome to the the FSA server, led by Aurora the first! While here, we want your experience to be a healthy and satisfactory one for both you and your fellow combat personnel, and to do this, we want you to take some time to follow a few rules.\n \n",
@@ -15,39 +25,99 @@ const greetDM = [
   "2. Be respectful of others and their opinions, even if they don’t agree with you\n",
   "3. Do NOT under any circumstances spam chat, it’s unpleasant for everyone, and filling chat with your trash hides the important stuff\n",
   "4. Please respect the outfit leader, as your leader, I want to be your friend, and I can take a good amount of verbal roughhousing, but please, not too much!\n",
-  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!",
+  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!\n",
+  "6. the following subjects are now to be left out of general chat: drugs, drug paraphernalia, drug use, drug inhalation/ingestion, talking how/where to buy drugs, etc.\n"
 ];
+const promotemessage = "<TEMP> has shown valiant effort for the cause, and their efforts have been rewarded!";
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-var users = [];
-var temp0,temp1,temp2,ran,runs;
-var log = "";
+let users = [];
+let temp0,temp1,temp2,ran,runs;
+let log = "";
 //example
 
 const star1954 ={
   name:'star1954',
   roles:[],
+  rvalue:0,
   nick:'star1954',
   mute:false,
   deaf:false,
   id:'234843909291769856',
   lastlogin:0,
   admin:true,
+  offender:0,
 };
+
+// Initialize Discord Bot
+var bot = new Discord.Client({
+   token: auth.token,
+   autorun: true
+});
+
 //Channel ID for summon and auto-role
-//*
+/*Mainbot
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-/*
+//*Testbot
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
 //*/
+/*******************************************************************************
+                                  Loop
+*******************************************************************************/
 
+function mainLoop() {//updating user data depending on situation
+  temp0=undefined;temp1=undefined;temp2=undefined;
+  for(var i = 0; i< users.length; i++){
+    if(users[i]!== undefined){
+      var o = users[i];
+
+      //offender thresholds
+      if(o.offender>=15){
+        //o.mute = true;
+        logData("Offender "+o.name+" Has reached mute threshold. \n Index: "+o.offender);
+      }
+
+
+      temp1 = false;
+      //auto adding admins
+      if(o.admin){for(var z = 0; z<admins.list; z++){if(admins[z]==o.id){
+          temp1 = true;
+        }}
+        admins.push(o.id);
+      }
+
+      //making mutes mute
+      if(o.mute){
+        bot.mute({
+          userID:o.id,
+          serverID:serverID
+        });
+      }else{
+        bot.unmute({
+          serverID:serverID,
+          userID:o.id
+        });
+      }
+
+      //slow offender "cooldown"
+      if(o.offender>0){
+        o.offender-=0.001;
+      }
+    }
+  }
+}
+setInterval(mainLoop,1000);
+
+/*******************************************************************************
+                                  Events
+*******************************************************************************/
 
 //configuration of logger
 logger.remove(logger.transports.Console);
@@ -55,11 +125,7 @@ logger.add(new logger.transports.Console, {
     colorize: true
 });
 logger.level = 'debug';
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
-});
+
 
 bot.on('any', function(event) {
   //logData(event.t);
@@ -77,6 +143,7 @@ bot.on('any', function(event) {
         lastlogin:0,
         admin:false,
         id:oi.user.id,
+        offender:0,
       };
       var push = true;
       for(var x = 0; x<users.length; x++){
@@ -133,6 +200,7 @@ bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins
       lastlogin:0,
       admin:false,
       id:oi.id,
+      offender:0,
     };
     users.push(po);
  });
@@ -144,34 +212,27 @@ bot.on('message', function (user, userID, channelID, message, evt) {
   //logData(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-    //logData("DEBUG"+userID);
+    logData("Message>> "+message);
     if (message.substring(0, 1) == '!') {
+      logData("Command>> "+message);
+      objectFromId(userID).offender+=0.5;
         var args = message.substring(1).split(' ');
         var cmd = args[0];
         args = args.splice(1);
         switch(cmd) {
-
             default:
             //unreconized command
+
             send(channelID,"Command not reconized");
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            //objectFromId(userID).offender-=0.5;
             break;
             //ping for debugging
             case 'ping':
-            var sent = false;
-            isAdmin(userID,function(){
-              sent = true;
-              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            bot.sendMessage({
+                to: channelID,
+                message: 'Pong!'
             });
-            if(!sent){
-              send(channelID,"Command not reconized");
-              bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-            }else{
-              bot.sendMessage({
-                  to: channelID,
-                  message: 'Pong!'
-              });
-            }
             break;
 
             //fsa summon, requested by AuroraTheFirst
@@ -181,8 +242,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               for(var i = 0; i<args.length; i++){
                 ar=ar+" "+args[i];
               }
-              send(mainchannelID,"<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>");
-              setTimeout(function(){send(mainchannelID,"**"+user+": "+ar+'**');},100);
+              var sen = "<@&324342717641654282> <@&324342883194765322> <@&368640962253291521> <@&368640999112835075>";
+              send(mainchannelID,sen+"\n"+"**"+user+": "+ar+'**');
               bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             });
             break;
@@ -210,23 +271,59 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             isAdmin(userID, asdf=>{
               var target = idFromName(args[0]);//get target ID
+              var o = objectFromId(target);
               console.log(args[0]+target);
               if(target==undefined){
-                target = '253592101844025345';
-              }//target exists
+                o = objectFromId('253592101844025345');
+              }//make sure target exists
+              if(o==undefined){
+                logData("Target Undefined");
+              }else{
+              //offender Index:
+              o.offender+=2;
+              logData("Offender: "+ o.name+"\n VIOLATION INDEX of user: "+o.offender);
+
                 //shut the ____ up amon!
                 var rand = Math.random();
                 if(rand<0.3){
-                send(channelID,"<@"+target+"> needs to stop before they're teamkilled by the wildcards");
+                send(channelID,"<@"+o.id+"> needs to stop before they're teamkilled by the wildcards");
               }else if(rand<0.8){
-                send(channelID,"<@"+target+"> needs to stop before they're decimated by an orbital strike");
+                send(channelID,"<@"+o.id+"> needs to stop before they're decimated by an orbital strike");
               }else{
-                send(channelID,"<@"+target+"> needs to stop before they're exiled to AutX");
-              }
+                send(channelID,"<@"+o.id+"> needs to stop before they're exiled to AutX");
+              }}
             });
+            break;
+
+            case 'myoffender':
+            bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+            send(mainchannelID,"offending index: \n"+objectFromId(userID).offender);
+            logData(objectFromId(userID).offender);
+            break;
+
+            case 'promote':
+            isAdmin(userID,function(){
+            send(mainchannelID,promotemessage.replace("TEMP",user));
+            var o = objectFromId(userID);
+            o.offender = 0;
+            bot.addToRole({//add to promoted role
+              severID:serverID,
+              userID:userID,
+              roleID:roles[1]
+            });
+            bot.removeFromRole({//remove from previous role
+              severID:serverID,
+              userID:userID,
+              roleID:roles[0]
+            });
+          });
+            break;
+            case 'demote':
             break;
          }
      }
+
+
 
 });
 
@@ -237,6 +334,7 @@ if(code === 0){
     setTimeout(function(){bot.connect();},10000);
 }else{
     logData("DISCONNECTED FROM SERVER");
+    saveData();
 }
 });
 
@@ -250,7 +348,11 @@ rl.on('line', (input) => {
   });
    });
  });
-  switch(input){
+
+ var args = input.substring(1).split(' ');
+ var cmd = args[0];
+ args = args.splice(1);
+  switch(cmd){
   case 'end':
     send(mainchannelID,"Bot Offline");
     bot.disconnect();
@@ -271,6 +373,9 @@ rl.on('line', (input) => {
   case 'debugdata':
   logData(idFromName('star1954'));
   break;
+
+  case 'remove':
+  bot.deleteMessage({channelID:channelID,messageID:args[0]});
   }
 
 });
@@ -312,7 +417,9 @@ function isAdmin(id,callback = function(){}){
     }
   }
   if(!s){
-    logData("Failed Auth");
+    var o = objectFromId(id);
+    logData("Failed Auth: "+ o.name+"\n VIOLATION INDEX: "+o.offender+1);
+    o.offender++;
   }
 }
 
@@ -349,6 +456,15 @@ function nameFromId(name,callback =function(name){}) {
     }
   }
 }
+function objectFromId(name,callback =function(name){}){
+  for(var i = 0; i<users.length; i++){
+    var u = users[i];
+    if(u.id === name){
+      callback(u);
+      return u;
+    }
+  }
+}
 
 //list rules
 function sendRules(userID){
@@ -359,4 +475,5 @@ function sendRules(userID){
   }
   send(userID,message);
 }
-//support for the previous function
+
+//millis to readable notation
