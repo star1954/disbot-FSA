@@ -2,21 +2,21 @@
 /*******************************************************************************
                                   Variables
 *******************************************************************************/
-var Discord = require('discord.io');//discord bot stuff
-var logger = require('winston');//idfk, logger?
+let Discord = require('discord.io');//discord bot stuff
+let logger = require('winston');//idfk, logger?
 const time = require('time');
-var millis = new time.time();
-var readline = require('readline');//readline for console commands
-var data = require('./data.json');//user data
+let millis = new time.time();
+let readline = require('readline');//readline for console commands
+let data = require('./data.json');//user data
 const auth = require('./auth.json');//auth token
-var fs = require('fs');//file read system
+let fs = require('fs');//file read system
 const silent = false; //silent online message for testing
-var admins = ['234843909291769856','255535608015880193'];
+let admins = ['234843909291769856','255535608015880193'];
 /*/
 var roles = ['368640999112835075','368640962253291521','324342883194765322','324342717641654282'];
 //*/
 //*/
-var roles = ['509824081600970753','516877427822166026','516877459870842882','516877474936913921'];
+let roles = ['509824081600970753','516877427822166026','516877459870842882','516877474936913921'];
 //*/
 const greet = "welcome to our home, <@TEMP> , you are family to the FSA now, enjoy your stay!";
 const greetDM = [
@@ -33,9 +33,9 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-var users = [];
-var temp0,temp1,temp2,ran,runs;
-var log = "";
+let users = [];
+let temp0,temp1,temp2,ran,runs;
+let log = "";
 //example
 
 const star1954 ={
@@ -73,7 +73,7 @@ var mainchannelID = "509889611066245122";
 *******************************************************************************/
 
 function mainLoop() {//updating user data depending on situation
-  temp0, temp1, temp2 = undefined;
+  temp0=undefined;temp1=undefined;temp2=undefined;
   for(var i = 0; i< users.length; i++){
     if(users[i]!== undefined){
       var o = users[i];
@@ -87,7 +87,7 @@ function mainLoop() {//updating user data depending on situation
 
       temp1 = false;
       //auto adding admins
-      if(o.admin){for(var i = 0; i<admins.list; i++){if(admins[i]==o.id){
+      if(o.admin){for(var z = 0; z<admins.list; z++){if(admins[z]==o.id){
           temp1 = true;
         }}
         admins.push(o.id);
@@ -108,7 +108,7 @@ function mainLoop() {//updating user data depending on situation
 
       //slow offender "cooldown"
       if(o.offender>0){
-        o.offender-=0.001
+        o.offender-=0.001;
       }
     }
   }
@@ -297,7 +297,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
             case 'myoffender':
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
-            send(mainchannelID,"offending index: \n"+objectFromId(userID).offender)
+            send(mainchannelID,"offending index: \n"+objectFromId(userID).offender);
             logData(objectFromId(userID).offender);
             break;
 
