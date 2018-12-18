@@ -19,3 +19,64 @@
 [1542967508]: Running and Listening
 [1542967510]: Retrying in 10 seconds
 [1542967510]: Retrying in 10 seconds
+[1543181189]: Running and Listening
+[1543181336]: Running and Listening
+[1543181367]: Running and Listening
+[1543181400]: Running and Listening
+[1543181404]>>savedata
+[1543181424]: Running and Listening
+[1543181446]: Running and Listening
+[1543181451]: Offender: TestBot
+ VIOLATION INDEX of user: 01
+[1543181664]: Running and Listening
+[1543181706]: Running and Listening
+[1543181732]: Running and Listening
+[1543181741]: Offender: The Last Soldier
+ VIOLATION INDEX of user: 01
+[1543181782]>>disconnect
+[1543181787]>>end
+[1543181787]: DISCONNECTED FROM SERVER
+[1543181832]: Running and Listening
+[1543181838]>>end
+[1543181839]: DISCONNECTED FROM SERVER
+[1543181848]>>connect
+[1543181852]>>end
+[1543181852]: DISCONNECTED FROM SERVER
+[1543181863]>>connect
+[1543183028]>>restart
+[1543183028]: DISCONNECTED FROM SERVER
+[1543183030]: Running and Listening
+[1543183062]: Running and Listening
+[1543183084]: Running and Listening
+[1543183101]: Offender: FSA-Bot
+ VIOLATION INDEX of user: 01
+[1543183141]>>end
+[1543183171]: Retrying in 10 seconds
+[1543183171]: Retrying in 10 seconds
+[1543183181]: Retrying in 10 seconds
+[1543183181]: Retrying in 10 seconds
+[1543183191]: Retrying in 10 seconds
+[1543183191]: Retrying in 10 seconds
+[1543183201]: Retrying in 10 seconds
+[1543183201]: Retrying in 10 seconds
+[1543183211]: Retrying in 10 seconds
+[1543183211]: Retrying in 10 seconds
+[1543183221]: Retrying in 10 seconds
+[1543183221]: Retrying in 10 seconds
+[1543183231]: Retrying in 10 seconds
+[1543183231]: Retrying in 10 seconds
+[1543183241]: Retrying in 10 seconds
+[1543183241]: Retrying in 10 seconds
+[1543183251]: Retrying in 10 seconds
+[1543183251]: Retrying in 10 seconds
+[1543183295]: Retrying in 10 seconds
+[1543183295]: Retrying in 10 seconds
+[1543183331]: Retrying in 10 seconds
+[1543183331]: Retrying in 10 seconds
+[1543183373]: Retrying in 10 seconds
+[1543183373]: Retrying in 10 seconds
+[1543183383]: Retrying in 10 seconds
+[1543183383]: Retrying in 10 seconds
+[1543210179]: Running and Listening
+[1543211562]>>end
+[1543211564]: DISCONNECTED FROM SERVER
