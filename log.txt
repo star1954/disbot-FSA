@@ -19,3 +19,53 @@
 [1542967508]: Running and Listening
 [1542967510]: Retrying in 10 seconds
 [1542967510]: Retrying in 10 seconds
+[1543803971]: Running and Listening
+[1543908798]: DISCONNECTED FROM SERVER
+[1543988936]>>connect
+[1544139545]: [object Object]
+[1544139545]: [object Object]
+[1544141808]: [object Object]
+[1544141808]: [object Object]
+[1544150588]: [object Object]
+[1544150588]: [object Object]
+[1544161200]>>end
+[1544161200]: DISCONNECTED FROM SERVER
+[1544230210]>>connect
+[1544248388]: [object Object]
+[1544248388]: [object Object]
+[1544313774]: [object Object]
+[1544313774]: [object Object]
+[1544333575]: [object Object]
+[1544333575]: [object Object]
+[1544492263]: [object Object]
+[1544492263]: [object Object]
+[1544495097]: [object Object]
+[1544495097]: [object Object]
+[1544495807]: [object Object]
+[1544495807]: [object Object]
+[1544496622]: [object Object]
+[1544496622]: [object Object]
+[1544573250]: [object Object]
+[1544573250]: [object Object]
+[1544672827]: Failed Auth
+[1544673106]: Failed Auth
+[1544799395]: DISCONNECTED FROM SERVER
+[1544832602]>>debugid
+[1544837909]>>ping
+[1544837914]>>disconnect
+[1544837916]>>end
+[1544837916]: DISCONNECTED FROM SERVER
+[1544837921]>>connect
+[1544949084]: [object Object]
+[1544949084]: [object Object]
+[1545001337]: [object Object]
+[1545001337]: [object Object]
+[1545005372]: [object Object]
+[1545005372]: [object Object]
+[1545006982]: [object Object]
+[1545006982]: [object Object]
+[1545094613]: [object Object]
+[1545094613]: [object Object]
+[1545098593]>>restart
+[1545098593]: DISCONNECTED FROM SERVER
+[1545098613]: Running and Listening
