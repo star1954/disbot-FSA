@@ -3,7 +3,7 @@
                                   Variables
 *******************************************************************************/
 var Discord = require('discord.io');//discord bot stuff
-var logger = require('winston');//idfk
+var logger = require('winston');//idfk, logger?
 const time = require('time');
 var millis = new time.time();
 var readline = require('readline');//readline for console commands
@@ -25,7 +25,8 @@ const greetDM = [
   "2. Be respectful of others and their opinions, even if they don’t agree with you\n",
   "3. Do NOT under any circumstances spam chat, it’s unpleasant for everyone, and filling chat with your trash hides the important stuff\n",
   "4. Please respect the outfit leader, as your leader, I want to be your friend, and I can take a good amount of verbal roughhousing, but please, not too much!\n",
-  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!",
+  "5. If there are any problems, concerns, or issues that arise on the server, please contact me or any currently acting sentinels, we are always happy to help, and I’m ALWAYS willing to be a shoulder to lean on about anything! We are a family, and I want to be there to support you!\n",
+  "6. the following subjects are now to be left out of general chat: drugs, drug paraphernalia, drug use, drug inhalation/ingestion, talking how/where to buy drugs, etc.\n"
 ];
 const promotemessage = "<TEMP> has shown valiant effort for the cause, and their efforts have been rewarded!";
 const rl = readline.createInterface({
@@ -40,6 +41,7 @@ var log = "";
 const star1954 ={
   name:'star1954',
   roles:[],
+  rvalue:0,
   nick:'star1954',
   mute:false,
   deaf:false,
@@ -48,13 +50,20 @@ const star1954 ={
   admin:true,
   offender:0,
 };
+
+// Initialize Discord Bot
+var bot = new Discord.Client({
+   token: auth.token,
+   autorun: true
+});
+
 //Channel ID for summon and auto-role
-//*Mainbot
+/*Mainbot
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-/*Testbot
+//*Testbot
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
@@ -116,11 +125,7 @@ logger.add(new logger.transports.Console, {
     colorize: true
 });
 logger.level = 'debug';
-// Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token0,
-   autorun: true
-});
+
 
 bot.on('any', function(event) {
   //logData(event.t);
@@ -270,8 +275,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log(args[0]+target);
               if(target==undefined){
                 o = objectFromId('253592101844025345');
-              }//target exists
-
+              }//make sure target exists
+              if(o==undefined){
+                logData("Target Undefined");
+              }else{
               //offender Index:
               o.offender+=2;
               logData("Offender: "+ o.name+"\n VIOLATION INDEX of user: "+o.offender);
@@ -284,7 +291,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 send(channelID,"<@"+o.id+"> needs to stop before they're decimated by an orbital strike");
               }else{
                 send(channelID,"<@"+o.id+"> needs to stop before they're exiled to AutX");
-              }
+              }}
             });
             break;
 
@@ -331,7 +338,7 @@ if(code === 0){
 }
 });
 
-//console commands 
+//console commands
 rl.on('line', (input) => {
   log="\n["+time.time()+"]>>"+input;
   fs.open('./log.txt', 'a', function(e, id) {
