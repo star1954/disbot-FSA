@@ -40,7 +40,7 @@ let log = "";
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
-   token: auth.token,
+   token: auth.token0,
    autorun: true
 });
 
@@ -60,12 +60,12 @@ const star1954 ={
 };
 
 //Channel ID for summon and auto-role
-/*Mainbot
+//*Mainbot
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-//*Testbot
+/*Testbot
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
@@ -170,42 +170,6 @@ bot.on('ready', function (evt) {
 });
 
 logData("Running and Listening");
-
-//welcome message
-bot.on('guildMemberAdd', function(callback) { /* Event called when someone joins the server */
-  var sms = greet.replace("TEMP",callback.id)//message, replace the blankspace "temp"
-  bot.createDMChannel(callback.id, function(call){
-    sendRules(callback.id);
-  });//send the DM
-
-  setTimeout(function(){
-    send(mainchannelID,sms);//send the message after .5 seconds
-  },500);//delayed server welcome
-
-  logData("new user, added user "+callback.username+':'+callback.id+ " to role:"+newcomerrole);
-  logData(callback);//log data
-
-  //add the user to the role, somehow not working
-    bot.addToRole({
-      serverID:serverID,
-      userID:callback.id,
-      roleID:newcomerrole,
-    });
-    //add to users array
-    var oi = callback;
-    var po = {
-      name:oi.username,
-      roles:oi.roles,
-      nick:oi.nick,
-      mute:oi.mute,
-      deaf:oi.deaf,
-      lastlogin:0,
-      admin:false,
-      id:oi.id,
-      offender:0,
-    };
-    users.push(po);
- });
 
 
 //listen for message commands
