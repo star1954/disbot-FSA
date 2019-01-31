@@ -7,7 +7,7 @@ const logger = require('../node_modules/winston');//idfk, logger?
 const time = require('../node_modules/time');
 const millis = new time.time();
 const readline = require('readline');//readline for console commands
-const data = require('./data/data.json');//user data
+const dataIO = require('./dataIO.js');//user data
 const auth = require('./data/auth.json');//auth token
 const fs = require('fs');//file read system
 const logpath = 'log.txt'
@@ -35,29 +35,12 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 let users = [];
-let temp0,temp1,temp2,ran,runs;
-let log = "";
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
    token: auth.token0,
    autorun: true
 });
-
-//example
-
-const star1954 ={
-  name:'star1954',
-  roles:[],
-  rvalue:0,
-  nick:'star1954',
-  mute:false,
-  deaf:false,
-  id:'234843909291769856',
-  lastlogin:0,
-  admin:true,
-  offender:0,
-};
 
 //Channel ID for summon and auto-role
 //*Mainbot
@@ -121,13 +104,6 @@ setInterval(mainLoop,1000);
                                   Events
 *******************************************************************************/
 
-//configuration of logger
-logger.remove(logger.transports.Console);
-logger.add(new logger.transports.Console, {
-    colorize: true
-});
-logger.level = 'debug';
-
 
 bot.on('any', function(event) {
   //logData(event.t);
@@ -147,25 +123,19 @@ bot.on('any', function(event) {
         id:oi.user.id,
         offender:0,
       };
-      var push = true;
-      for(var x = 0; x<users.length; x++){
-        if(users[x].id == po.id) push = false;
-      }
-      if(push) users.push(po);
-      for(var x = 0; x<users.length; x++){
-        //if(users[i].admin){admins.push(users[i].id);}
-      }
-      //users.length;
-    //logData(users);
+
+
+
+      //pull from database
     }
   }
 });
 
 //bot initialization
 bot.on('ready', function (evt) {
-    logger.info('Connected');
-    logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    logData('Connected');
+    logData('Logged in as: ');
+    logData(bot.username + ' - (' + bot.id + ')');
     if(!silent) send(mainchannelID,'Bot Online');
 });
 
@@ -178,7 +148,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
   //logData(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-    logData("Message>> "+message);
+
     if (message.substring(0, 1) == '!') {
       logData("Command>> "+message);
       objectFromId(userID).offender+=0.5;
@@ -287,6 +257,8 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'demote':
             break;
          }
+     }else{
+       logData("Message>> "+message);
      }
 
 
@@ -306,6 +278,7 @@ if(code === 0){
 
 //console commands
 rl.on('line', (input) => {
+  if(true){
   log="\n["+time.time()+"]>>"+input;
   fs.open('./log.txt', 'a', function(e, id) {
    fs.write(id, log, null, 'utf8', function(err){
@@ -313,7 +286,7 @@ rl.on('line', (input) => {
     if (err) throw err;
   });
    });
- });
+ });}
 
  var args = input.substring(1).split(' ');
  var cmd = args[0];
@@ -323,6 +296,7 @@ rl.on('line', (input) => {
     send(mainchannelID,"Bot Offline");
     bot.disconnect();
   break;
+
   case 'restart':
     send(mainchannelID,"Bot Restarting");
     bot.disconnect();
@@ -362,6 +336,9 @@ function saveData(){
         logData(err);
       }
     }); //write
+for(var i = 0; i<users.length; i++){
+    dataIO.insertDoc(users[i]);
+  }
 }
 
 //send message
@@ -442,5 +419,3 @@ function sendRules(userID){
   }
   send(userID,message);
 }
-
-//millis to readable notation

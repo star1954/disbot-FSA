@@ -1,6 +1,7 @@
 const fs = require('fs');
 const time = require('../node_modules/time');
 const millis = new time.time();
+const db = require('./mongo.js')
 
 //log data
 exports.logData = function(data) {
@@ -30,3 +31,19 @@ exports.writeJSON = function(filepath, data, callback = function(){}){
     }
   }); //write
 }
+
+exports.readDB = function(data){
+  db.find(data);
+};
+exports.insertDoc = function(data){
+  db.insert(data);
+};
+exports.deleteDoc = function(data){
+  db.delete(data);
+}
+
+exports.replaceDoc = function(data0,data1){
+  exports.deleteDoc(data0, function(){
+    exports.insertDoc(data1);
+  });
+};
