@@ -3,6 +3,38 @@ const time = require('../node_modules/time');
 const millis = new time.time();
 const db = require('./mongo.js')
 
+
+//IO commands
+exports.readJSON = function(filepath, callback = function(){}){
+}//WIP DO NOT USE
+
+exports.writeJSON = function(filepath, data, callback = function(){}){
+  var json = JSON.stringify(data); //convert it back to a string
+  //logData("DEBUG: "+json);
+  fs.writeFile(filepath), json, 'utf8', function(err){//write to file
+    if(err){//log any errors
+      exports.logData(err);
+    }
+  }); //write
+}//WIP DO NOT USE
+
+exports.replaceDoc = function(data0,data1){
+  db.delete(data0, function(){
+    db.insert(data1);
+  });
+};
+
+exports.readUsers = function(callback){
+  db.find({userdata:true},function(data){
+    callback(data);
+  })
+}
+
+exports.writeUsers = function(data){
+  db.write
+}
+
+
 //log data
 exports.logData = function(data) {
   var log="\n["+time.time()+"]: "+data;//time marker and formatting
@@ -16,34 +48,11 @@ exports.logData = function(data) {
   });
    });
  });
-}
-
-//IO commands
-exports.readJSON = function(filepath, callback = function(){}){
-}
-
-exports.writeJSON = function(filepath, data, callback = function(){}){
-  var json = JSON.stringify(data); //convert it back to a string
-  //logData("DEBUG: "+json);
-  fs.writeFile(filepath), json, 'utf8', function(err){//write to file
-    if(err){//log any errors
-      exports.logData(err);
-    }
-  }); //write
-}
-
-exports.readDB = function(data){
-  db.find(data);
-};
-exports.insertDoc = function(data){
-  db.insert(data);
-};
-exports.deleteDoc = function(data){
-  db.delete(data);
-}
-
-exports.replaceDoc = function(data0,data1){
-  exports.deleteDoc(data0, function(){
-    exports.insertDoc(data1);
-  });
-};
+ db.find({log:true}function(data){
+   var dat = {log:true,logs:data.logs};
+   db.delete(data, function(){
+     dat.logs += log;
+     db.insert(data);
+   });
+ })
+}//log data into storage

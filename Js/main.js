@@ -35,6 +35,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 let users = [];
+var
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
@@ -123,8 +124,6 @@ bot.on('any', function(event) {
         id:oi.user.id,
         offender:0,
       };
-
-
 
       //pull from database
     }
