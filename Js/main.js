@@ -335,9 +335,7 @@ function saveData(){
         logData(err);
       }
     }); //write
-for(var i = 0; i<users.length; i++){
-    dataIO.insertDoc(users[i]);
-  }
+    dataIO.writeUsers(users);
 }
 
 //send message
@@ -367,17 +365,7 @@ function isAdmin(id,callback = function(){}){
 
 //log data
 function logData(data) {
-  log="\n["+time.time()+"]: "+data;//time marker and formatting
-  console.log(log);
-  //let me try tis again
-  fs.createWriteStream(logpath);
-  fs.open(logpath, 'a', function(e, id) {
-   fs.write(id, log, null, 'utf8', function(err){
-     fs.close(id, (err) => {
-    if (err) throw err;
-  });
-   });
- });
+  dataIO.logData(data);
 }
 
 //get userID from username and vise versa

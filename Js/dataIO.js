@@ -26,12 +26,16 @@ exports.replaceDoc = function(data0,data1){
 
 exports.readUsers = function(callback){
   db.find({userdata:true},function(data){
-    callback(data);
+    callback(data.data);
   })
 }
 
 exports.writeUsers = function(data){
-  db.write
+  db.delete({userdata:true}, function(){
+    db.insert({userdata:true,data:data
+    });
+  });
+
 }
 
 
