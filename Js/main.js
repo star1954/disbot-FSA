@@ -35,7 +35,20 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 let users = [];
-var
+
+const star1954 ={
+  name:'star1954',
+  roles:[],
+  rvalue:0,
+  nick:'star1954',
+  mute:false,
+  deaf:false,
+  id:'234843909291769856',
+  lastlogin:0,
+  admin:true,
+  offender:0,
+};
+
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
@@ -127,6 +140,9 @@ bot.on('any', function(event) {
 
       //pull from database
     }
+    objectFromId('star1954',function(u){
+      u = Star1954;
+    });
   }
 });
 
@@ -147,8 +163,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
   //logData(bot.getAllUsers());
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
-
-    if (message.substring(0, 1) == '!') {
+    var run = true;
+    objectFromId(userID,function(u){
+      if(u.mute){
+        run = false;
+        bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
+      }
+    });
+    if (message.substring(0, 1) == '!'&&run) {
       logData("Command>> "+message);
       objectFromId(userID).offender+=0.5;
         var args = message.substring(1).split(' ');
@@ -210,12 +232,13 @@ bot.on('message', function (user, userID, channelID, message, evt) {
               console.log(args[0]+target);
               if(target==undefined){
                 o = objectFromId('253592101844025345');
+                o.offender+=4;
               }//make sure target exists
               if(o==undefined){
                 logData("Target Undefined");
               }else{
               //offender Index:
-              o.offender+=2;
+              o.offender+=5;
               logData("Offender: "+ o.name+"\n VIOLATION INDEX of user: "+o.offender);
 
                 //shut the ____ up amon!
