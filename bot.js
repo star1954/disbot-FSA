@@ -53,17 +53,17 @@ const star1954 ={
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
-   token: auth.token,
+   token: auth.token0,
    autorun: true
 });
 
 //Channel ID for summon and auto-role
-/*Mainbot
+//*Mainbot
 const newcomerrole = "368640999112835075";
 const serverID = "323941972157005826";
 var mainchannelID = "323941972157005826";
 //*/
-//*Testbot
+/*Testbot
 const newcomerrole = "509824081600970753";
 const serverID = "502961198002864130";
 var mainchannelID = "509889611066245122";
