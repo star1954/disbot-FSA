@@ -179,7 +179,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         switch(cmd) {
             default:
             //unreconized command
-
             send(channelID,"Command not reconized");
             bot.deleteMessage({channelID:channelID,messageID:evt.d.id});
             //objectFromId(userID).offender-=0.5;
