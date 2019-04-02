@@ -229,10 +229,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             break;
             //ping for debugging
             case 'ping':
-            bot.sendMessage({
+            isAdmin(userID,function(){
+              bot.sendMessage({
                 to: channelID,
                 message: 'Pong!'
-            });
+            });});
+
             break;
 
             //fsa summon, requested by AuroraTheFirst
